@@ -11,6 +11,7 @@ public class LabelConfig : IEntityTypeConfiguration<Label>
         label.ToTable("labels");
 
         label.HasKey(l => l.Id);
+        label.Property(l => l.Id).ValueGeneratedOnAdd();
 
         label.Property(l => l.UserId).IsRequired();
     }

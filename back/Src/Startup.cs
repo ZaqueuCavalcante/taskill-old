@@ -9,6 +9,8 @@ public class Startup
     {
         services.AddSingleton<DatabaseSettings>();
 
+        services.AddRouting(options => options.LowercaseUrls = true);
+
         services.AddControllers();
 
         services.AddEfCoreConfigurations();
@@ -21,7 +23,11 @@ public class Startup
         app.UseRouting();
 
         app.UseSwagger();
-        app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskill 1.0"));
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskill 1.0");
+            options.DefaultModelsExpandDepth(-1);
+        });
 
         app.UseEndpoints(builder => builder.MapControllers());
     }

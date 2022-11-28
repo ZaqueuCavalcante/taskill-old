@@ -11,6 +11,7 @@ public class ProjectConfig : IEntityTypeConfiguration<Project>
         project.ToTable("projects");
 
         project.HasKey(p => p.Id);
+        project.Property(p => p.Id).ValueGeneratedOnAdd();
 
         project.Property(p => p.UserId).IsRequired();
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Taskill.Database;
+using Taskill.Domain;
 
 namespace Taskill.Controllers;
 
@@ -13,6 +14,18 @@ public class ProjectsController : ControllerBase
     public ProjectsController(TaskillDbContext context)
     {
         _context = context;
+    }
+
+    [HttpPost("")]
+    public async Task<IActionResult> CreateNewProject([FromBody] ProjectIn projectIn)
+    {
+        var project = new Project(1, projectIn.Name);
+
+        _context.Add(project);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 
     [HttpGet("")]

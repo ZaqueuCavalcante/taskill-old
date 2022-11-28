@@ -17,4 +17,19 @@ public class Task
     public DateTime? DueDate { get; set; }
 
     public List<Label> Labels { get; set; }
+
+    public Task() {}
+
+    public Task(
+        uint userId,
+        uint projectId,
+        string description,
+        byte priority
+    ) {
+        UserId = userId;
+        ProjectId = projectId;
+        Description = description;
+        Priority = priority;
+        CreationDate = DateTime.UtcNow;
+    }
 }

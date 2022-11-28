@@ -7,6 +7,7 @@ public class TaskillDbContext : DbContext
 {
     public DbSet<Domain.Task> Tasks { get; set; }
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Label> Labels { get; set; }
 
     public TaskillDbContext(DbContextOptions<TaskillDbContext> options) : base(options) { }
 

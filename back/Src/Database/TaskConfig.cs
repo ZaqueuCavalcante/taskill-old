@@ -11,6 +11,7 @@ public class BloggerConfig : IEntityTypeConfiguration<Domain.Task>
         task.ToTable("tasks");
 
         task.HasKey(t => t.Id);
+        task.Property(t => t.Id).ValueGeneratedOnAdd();
 
         task.Property(t => t.UserId).IsRequired();
         task.Property(t => t.ProjectId).IsRequired();
