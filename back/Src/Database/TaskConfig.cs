@@ -16,6 +16,8 @@ public class BloggerConfig : IEntityTypeConfiguration<Domain.Task>
         task.Property(t => t.UserId).IsRequired();
         task.Property(t => t.ProjectId).IsRequired();
 
+        task.Property(t => t.Title).IsRequired();
+
         task.HasMany(t => t.Labels)
             .WithMany(l => l.Tasks)
             .UsingEntity<Dictionary<string, object>>(

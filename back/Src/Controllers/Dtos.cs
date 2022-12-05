@@ -2,19 +2,21 @@ namespace Taskill.Controllers;
 
 public class TaskIn
 {
-    public uint ProjectId { get; set; }
+    public uint projectId { get; set; }
 
-    public string Description { get; set; }
+    public string title { get; set; }
 
-    public byte Priority { get; set; }
+    public string? description { get; set; }
+
+    public byte priority { get; set; }
 }
 
 public class ProjectIn
 {
-    public string Name { get; set; }
+    public string name { get; set; }
 }
 
 public class LabelIn
 {
-    public string Name { get; set; }
+    public string name { get; set; }
 }

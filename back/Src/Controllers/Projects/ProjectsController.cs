@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Taskill.Database;
 using Taskill.Domain;
+using Taskill.Extensions;
+using static Taskill.Configurations.AuthorizationConfigurations;
 
 namespace Taskill.Controllers;
 
-[ApiController]
-[Route("[controller]")]
+[ApiController, Route("[controller]")]
+[Authorize(Roles = TaskillerRole)]
 public class ProjectsController : ControllerBase
 {
     private readonly TaskillDbContext _context;
@@ -19,7 +22,9 @@ public class ProjectsController : ControllerBase
     [HttpPost("")]
     public async Task<IActionResult> CreateNewProject([FromBody] ProjectIn projectIn)
     {
-        var project = new Project(1, projectIn.Name);
+        var userId = User.Id();
+
+        var project = new Project(userId, projectIn.name);
 
         _context.Add(project);
 
@@ -31,7 +36,10 @@ public class ProjectsController : ControllerBase
     [HttpGet("")]
     public async Task<IActionResult> GetAllProjects()
     {
-        var projects = await _context.Projects.ToListAsync();
+        var userId = User.Id();
+
+        var projects = await _context.Projects
+            .Where(t => t.UserId == userId).ToListAsync();
 
         return Ok(projects);
     }
