@@ -20,11 +20,18 @@ public class LabelsController : ControllerBase
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateNewLabel([FromBody] LabelIn labelIn)
+    public async Task<IActionResult> CreateNewLabel([FromBody] LabelIn data)
     {
         var userId = User.Id();
 
-        var label = new Label(userId, labelIn.name);
+        var labelAlreadyExists = await _context.Labels
+            .AnyAsync(l => l.UserId == userId && l.Name == data.name);
+        if (labelAlreadyExists)
+        {
+            return NoContent();
+        }
+
+        var label = new Label(userId, data.name);
 
         _context.Add(label);
         await _context.SaveChangesAsync();

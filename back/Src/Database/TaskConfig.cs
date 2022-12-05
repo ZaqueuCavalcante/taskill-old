@@ -4,7 +4,7 @@ using Taskill.Domain;
 
 namespace Taskill.Database;
 
-public class BloggerConfig : IEntityTypeConfiguration<Domain.Task>
+public class TaskConfig : IEntityTypeConfiguration<Domain.Task>
 {
     public void Configure(EntityTypeBuilder<Domain.Task> task)
     {

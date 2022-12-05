@@ -20,11 +20,18 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateNewProject([FromBody] ProjectIn projectIn)
+    public async Task<IActionResult> CreateNewProject([FromBody] ProjectIn data)
     {
         var userId = User.Id();
 
-        var project = new Project(userId, projectIn.name);
+        var projectAlreadyExists = await _context.Labels
+            .AnyAsync(l => l.UserId == userId && l.Name == data.name);
+        if (projectAlreadyExists)
+        {
+            return NoContent();
+        }
+
+        var project = new Project(userId, data.name);
 
         _context.Add(project);
 
