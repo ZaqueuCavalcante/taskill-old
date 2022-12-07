@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Identity;
 using Taskill.Database;
 using Taskill.Domain;
 
-namespace Taskill.Configurations;
+namespace Taskill.Configs;
 
-public static class IdentityConfigurations
+public static class IdentityConfigs
 {
-    public static void AddIdentityConfigurations(this IServiceCollection services)
+    public static void AddIdentityConfigs(this IServiceCollection services)
     {
         services.AddIdentity<Taskiller, IdentityRole<uint>>()
             .AddEntityFrameworkStores<TaskillDbContext>()

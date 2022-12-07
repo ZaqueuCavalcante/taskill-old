@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Taskill.Domain;
 using Taskill.Extensions;
-using static Taskill.Configurations.AuthorizationConfigurations;
+using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Database;
 

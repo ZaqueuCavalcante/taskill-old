@@ -7,7 +7,7 @@ using Taskill.Controllers;
 using Taskill.Database;
 using Taskill.Domain;
 using Taskill.Settings;
-using static Taskill.Configurations.AuthorizationConfigurations;
+using static Taskill.Configs.AuthorizationConfigs;
 using Task = System.Threading.Tasks.Task;
 
 namespace Taskill.Services.Auth;

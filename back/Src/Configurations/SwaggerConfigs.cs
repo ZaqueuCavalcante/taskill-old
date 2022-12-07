@@ -1,12 +1,12 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
-using static Taskill.Configurations.AuthenticationConfigurations;
+using static Taskill.Configs.AuthenticationConfigs;
 
-namespace Taskill.Configurations;
+namespace Taskill.Configs;
 
-public static class SwaggerConfigurations
+public static class SwaggerConfigs
 {
-    public static void AddSwaggerConfigurations(this IServiceCollection services)
+    public static void AddSwaggerConfigs(this IServiceCollection services)
     {
         services.AddSwaggerGen(options =>
         {
@@ -14,7 +14,7 @@ public static class SwaggerConfigurations
             {
                 Title = "Taskill",
                 Version = "1.0",
-                Description = "A API to a simple TODO app.",
+                Description = "A API to Taskill Web App.",
                 Contact = new OpenApiContact() { Name = "Zaqueu Cavalcante", Email = "zaqueudovale@gmail.com" },
                 TermsOfService = new Uri("https://docs.github.com"),
                 License = new OpenApiLicense() { Name = "License", Url = new Uri("https://opensource.org/licenses/MIT") }
@@ -25,7 +25,7 @@ public static class SwaggerConfigurations
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Description = "JWT authorization header using the bearer scheme. Past 'Bearer <jwt>' below.",
+                Description = "JWT authorization header using the bearer scheme.",
                 Scheme = Scheme,
             });
 

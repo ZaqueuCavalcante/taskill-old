@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Taskill.Database;
 using Taskill.Settings;
 
-namespace Taskill.Configurations;
+namespace Taskill.Configs;
 
-public static class EfCoreConfigurations
+public static class EfCoreConfigs
 {
-    public static void AddEfCoreConfigurations(this IServiceCollection services)
+    public static void AddEfCoreConfigs(this IServiceCollection services)
     {
         var databaseSettings = services.BuildServiceProvider().GetService<DatabaseSettings>()!;
 

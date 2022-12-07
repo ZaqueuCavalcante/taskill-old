@@ -1,4 +1,4 @@
-using Taskill.Configurations;
+using Taskill.Configs;
 using Taskill.Services.Auth;
 using Taskill.Settings;
 
@@ -17,14 +17,14 @@ public class Startup
 
         services.AddControllers();
 
-        services.AddEfCoreConfigurations();
+        services.AddEfCoreConfigs();
 
-        services.AddIdentityConfigurations();
+        services.AddIdentityConfigs();
 
-        services.AddAuthorizationConfigurations();
-        services.AddAuthenticationConfigurations();
+        services.AddAuthorizationConfigs();
+        services.AddAuthenticationConfigs();
 
-        services.AddSwaggerConfigurations();
+        services.AddSwaggerConfigs();
     }
 
     public static void Configure(IApplicationBuilder app)

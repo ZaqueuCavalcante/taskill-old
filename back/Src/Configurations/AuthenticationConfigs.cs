@@ -3,13 +3,13 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Taskill.Settings;
 
-namespace Taskill.Configurations;
+namespace Taskill.Configs;
 
-public static class AuthenticationConfigurations
+public static class AuthenticationConfigs
 {
     public const string Scheme = "Bearer";
 
-    public static void AddAuthenticationConfigurations(this IServiceCollection services)
+    public static void AddAuthenticationConfigs(this IServiceCollection services)
     {
         var authSettings = services.BuildServiceProvider().GetService<AuthSettings>()!;
 
@@ -45,7 +45,6 @@ public static class AuthenticationConfigurations
         .AddJwtBearer(Scheme, options =>
         {
             options.SaveToken = true;
-
             options.TokenValidationParameters = tokenValidationParameters;
         });
     }
