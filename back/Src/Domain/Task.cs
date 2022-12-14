@@ -1,3 +1,5 @@
+using Taskill.Exceptions;
+
 namespace Taskill.Domain;
 
 public class Task
@@ -33,7 +35,17 @@ public class Task
         ProjectId = projectId;
         Title = title;
         Description = description;
-        Priority = priority;
+        SetPriority(priority);
         CreationDate = DateTime.UtcNow;
+    }
+
+    private void SetPriority(byte priority)
+    {
+        if (priority > 3)
+        {
+            throw new DomainException("The task priority should be 0, 1, 2 or 3.");
+        }
+
+        Priority = priority;
     }
 }

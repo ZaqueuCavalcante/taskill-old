@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
+using Taskill.Settings;
 using static Taskill.Configs.AuthenticationConfigs;
 
 namespace Taskill.Configs;
@@ -53,5 +54,18 @@ public static class SwaggerConfigs
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
         });
+    }
+
+    public static void UseSwaggerThings(this IApplicationBuilder app)
+    {
+        if (Env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskill 1.0");
+                options.DefaultModelsExpandDepth(-1);
+            });
+        }
     }
 }

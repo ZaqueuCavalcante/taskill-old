@@ -1,4 +1,5 @@
 using Taskill.Configs;
+using Taskill.Exceptions;
 using Taskill.Services.Auth;
 using Taskill.Settings;
 
@@ -31,15 +32,12 @@ public class Startup
     {
         app.UseRouting();
 
+        app.UseMiddleware<DomainExceptionMiddleware>();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseSwagger();
-        app.UseSwaggerUI(options =>
-        {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Taskill 1.0");
-            options.DefaultModelsExpandDepth(-1);
-        });
+        app.UseSwaggerThings();
 
         app.UseEndpoints(builder => builder.MapControllers());
     }
