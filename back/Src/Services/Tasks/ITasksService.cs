@@ -11,6 +11,9 @@ public interface ITasksService
 
     Task ChangeTaskPriority(uint userId, uint taskId, byte priority);
 
+    Task ChangeTaskTitle(uint userId, uint taskId, string title);
+    Task ChangeTaskDescription(uint userId, uint taskId, string description);
+
     Task<Domain.Task> GetTask(uint userId, uint taskId);
 
     Task<List<Domain.Task>> GetTasks(uint userId);

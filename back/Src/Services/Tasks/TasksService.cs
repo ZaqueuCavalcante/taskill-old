@@ -76,6 +76,32 @@ public class TasksService : ITasksService
         await _context.SaveChangesAsync();
     }
 
+    public async Task ChangeTaskTitle(uint userId, uint taskId, string title)
+    {
+        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        task.SetTitle(title);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ChangeTaskDescription(uint userId, uint taskId, string description)
+    {
+        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        task.SetDescription(description);
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<Domain.Task> GetTask(uint userId, uint taskId)
     {
         var task = await _context.Tasks

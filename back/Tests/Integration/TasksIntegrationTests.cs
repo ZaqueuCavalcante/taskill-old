@@ -131,4 +131,44 @@ public class TasksIntegrationTests : ApiTestBase
 
         task.priority.Should().Be(newPriority);
     }
+
+    [Test]
+    public async Task Deve_mudar_o_titulo_de_uma_task()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+        var taskId = await CreateTask();
+        var data = new TaskTitleIn{ title = "New title to test endpoint lalala..." };
+
+        // Act
+        var response = await _client.PutAsync($"/tasks/{taskId}/title", data.ToStringContent());
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var task = await GetTask(taskId);
+
+        task.title.Should().Be(data.title);
+    }
+
+    [Test]
+    public async Task Deve_mudar_a_descricao_de_uma_task()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+        var taskId = await CreateTask();
+        var data = new TaskDescriptionIn{ description = "New description to test endpoint lalala..." };
+
+        // Act
+        var response = await _client.PutAsync($"/tasks/{taskId}/description", data.ToStringContent());
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var task = await GetTask(taskId);
+
+        task.description.Should().Be(data.description);
+    }
 }

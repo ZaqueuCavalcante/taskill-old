@@ -58,6 +58,24 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}/title")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskTitle([FromRoute] uint id, [FromBody] TaskTitleIn data)
+    {
+        await _tasksService.ChangeTaskTitle(User.Id(), id, data.title);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/description")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskDescription([FromRoute] uint id, [FromBody] TaskDescriptionIn data)
+    {
+        await _tasksService.ChangeTaskDescription(User.Id(), id, data.description);
+
+        return NoContent();
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(TaskOut), 200)]
     public async Task<IActionResult> GetTask([FromRoute] uint id)

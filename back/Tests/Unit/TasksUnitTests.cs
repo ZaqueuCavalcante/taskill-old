@@ -119,4 +119,37 @@ public class TasksUnitTests
         task.SetPriority(priority);
         task.Priority.Should().Be(priority);
     }
+
+    [Test]
+    [TestCaseSource(typeof(Streams), nameof(Streams.ValidTitlesStream))]
+    public void After_task_creation__should_change_the_task_title(string title)
+    {
+        var task = new Domain.Task(
+            userId: 1,
+            projectId: 1,
+            title: "Finish this project",
+            description: "Now",
+            priority: 0
+        );
+
+        task.SetTitle(title);
+        task.Title.Should().Be(title);
+    }
+
+    [Test]
+    public void After_task_creation__should_change_the_task_description()
+    {
+        var task = new Domain.Task(
+            userId: 1,
+            projectId: 1,
+            title: "Finish this project",
+            description: "Now",
+            priority: 0
+        );
+
+        const string newDescription = "New description lalala...";
+
+        task.SetDescription(newDescription);
+        task.Description.Should().Be(newDescription);
+    }
 }

@@ -35,12 +35,12 @@ public class Task
         UserId = userId;
         ProjectId = projectId;
         SetTitle(title);
-        Description = description;
+        SetDescription(description);
         SetPriority(priority);
         CreationDate = DateTime.UtcNow;
     }
 
-    private void SetTitle(string title)
+    public void SetTitle(string title)
     {
         if (title.IsEmpty() || title.Length < 3)
         {
@@ -58,6 +58,11 @@ public class Task
         }
 
         Priority = priority;
+    }
+
+    public void SetDescription(string? description)
+    {
+        Description = description;
     }
 
     public void Complete()
