@@ -1,6 +1,7 @@
 using Taskill.Configs;
 using Taskill.Exceptions;
 using Taskill.Services.Auth;
+using Taskill.Services.Tasks;
 using Taskill.Settings;
 
 namespace Taskill;
@@ -13,6 +14,7 @@ public class Startup
         services.AddSingleton<DatabaseSettings>();
 
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<ITasksService, TasksService>();
 
         services.AddRouting(options => options.LowercaseUrls = true);
 

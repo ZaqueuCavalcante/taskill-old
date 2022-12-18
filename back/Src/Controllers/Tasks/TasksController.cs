@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Taskill.Database;
 using Taskill.Extensions;
+using Taskill.Services.Tasks;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
@@ -12,29 +13,23 @@ namespace Taskill.Controllers;
 public class TasksController : ControllerBase
 {
     private readonly TaskillDbContext _context;
+    private readonly ITasksService _tasksService;
 
-    public TasksController(TaskillDbContext context)
-    {
+    public TasksController(
+        TaskillDbContext context,
+        ITasksService tasksService
+    ) {
         _context = context;
+        _tasksService = tasksService;
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateNewTask([FromBody] TaskIn taskIn)
+    [ProducesResponseType(typeof(TaskOut), 200)]
+    public async Task<IActionResult> CreateTask([FromBody] TaskIn data)
     {
-        var userId = User.Id();
+        var task = await _tasksService.CreateTask(User.Id(), data);
 
-        var projectExists = await _context.Projects.AnyAsync(p => p.UserId == userId && p.Id == taskIn.projectId);
-        if (!projectExists)
-        {
-            throw new Exception("Erro lalala");
-        }
-
-        var task = new Domain.Task(userId, taskIn.projectId, taskIn.title, taskIn.description, taskIn.priority);
-
-        _context.Add(task);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
+        return Ok(new TaskOut(task));
     }
 
     [HttpGet("")]

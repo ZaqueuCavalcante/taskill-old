@@ -1,4 +1,5 @@
 using Taskill.Exceptions;
+using Taskill.Extensions;
 
 namespace Taskill.Domain;
 
@@ -22,8 +23,6 @@ public class Task
 
     public List<Label> Labels { get; set; }
 
-    public Task() { }
-
     public Task(
         uint userId,
         uint projectId,
@@ -33,10 +32,20 @@ public class Task
     ) {
         UserId = userId;
         ProjectId = projectId;
-        Title = title;
+        SetTitle(title);
         Description = description;
         SetPriority(priority);
         CreationDate = DateTime.UtcNow;
+    }
+
+    private void SetTitle(string title)
+    {
+        if (title.IsEmpty() || title.Length < 3)
+        {
+            throw new DomainException("The task title should be contains more that 3 letters.");
+        }
+
+        Title = title;
     }
 
     private void SetPriority(byte priority)

@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Taskill.Controllers;
 using Taskill.Database;
 using Taskill.Domain;
+using Taskill.Exceptions;
 using Taskill.Settings;
 using static Taskill.Configs.AuthorizationConfigs;
 using Task = System.Threading.Tasks.Task;
@@ -15,20 +16,23 @@ namespace Taskill.Services.Auth;
 public class AuthService : IAuthService
 {
     private readonly UserManager<Taskiller> _userManager;
+    private readonly SignInManager<Taskiller> _signInManager;
     private readonly AuthSettings _authSettings;
     private readonly TaskillDbContext _context;
 
     public AuthService(
         UserManager<Taskiller> userManager,
+        SignInManager<Taskiller> signInManager,
         AuthSettings authSettings,
         TaskillDbContext context
     ) {
         _userManager = userManager;
+        _signInManager = signInManager;
         _authSettings = authSettings;
         _context = context;
     }
 
-    public async Task CreateNewTaskiller(string email, string password)
+    public async Task CreateTaskiller(string email, string password)
     {
         var user = new Taskiller(email);
 
@@ -36,18 +40,31 @@ public class AuthService : IAuthService
 
         if (!result.Succeeded)
         {
-            throw new Exception("Erro lalala");
+            throw new DomainException("Erro na criação do usuário.");
         }
 
         await _userManager.AddToRoleAsync(user, TaskillerRole);
 
-        var project = new Project(user.Id, "Default");
+        var project = new Project(user.Id, "Today");
+
         _context.Add(project);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<AccessTokenOut> GenerateAccessToken(string email)
+    public async Task<AccessTokenOut> Login(string email, string password)
     {
+        var result = await _signInManager.PasswordSignInAsync(
+            userName: email,
+            password: password,
+            isPersistent: false,
+            lockoutOnFailure: true
+        );
+
+        if (!result.Succeeded)
+        {
+            throw new DomainException("Login failed.");
+        }
+
         var accessToken = await GenerateJwt(email);
 
         return new AccessTokenOut

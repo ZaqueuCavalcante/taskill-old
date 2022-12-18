@@ -20,7 +20,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateNewProject([FromBody] ProjectIn data)
+    public async Task<IActionResult> CreateProject([FromBody] ProjectIn data)
     {
         var userId = User.Id();
 
@@ -41,6 +41,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("")]
+    [ProducesResponseType(typeof(List<ProjectOut>), 200)]
     public async Task<IActionResult> GetAllProjects()
     {
         var userId = User.Id();
@@ -48,6 +49,6 @@ public class ProjectsController : ControllerBase
         var projects = await _context.Projects
             .Where(t => t.UserId == userId).ToListAsync();
 
-        return Ok(projects);
+        return Ok(projects.ConvertAll(p => new ProjectOut(p)));
     }
 }
