@@ -67,4 +67,56 @@ public class TasksUnitTests
         act.Should().Throw<DomainException>()
             .WithMessage("The task title should be contains more that 3 letters.");
     }
+
+    [Test]
+    public void After_task_creation__should_complete_the_task()
+    {
+        var task = new Domain.Task(
+            userId: 1,
+            projectId: 1,
+            title: "Finish this project",
+            description: "Now",
+            priority: 3
+        );
+
+        task.CompletionDate.Should().BeNull();
+
+        task.Complete();
+
+        task.CompletionDate.Should().NotBeNull();
+    }
+
+    [Test]
+    public void After_task_creation_and_complete__should_uncomplete_the_task()
+    {
+        var task = new Domain.Task(
+            userId: 1,
+            projectId: 1,
+            title: "Finish this project",
+            description: "Now",
+            priority: 3
+        );
+
+        task.Complete();
+        task.CompletionDate.Should().NotBeNull();
+
+        task.Uncomplete();
+        task.CompletionDate.Should().BeNull();
+    }
+
+    [Test]
+    [TestCaseSource(typeof(Streams), nameof(Streams.ValidPrioritiesStream))]
+    public void After_task_creation__should_change_the_task_priority(byte priority)
+    {
+        var task = new Domain.Task(
+            userId: 1,
+            projectId: 1,
+            title: "Finish this project",
+            description: "Now",
+            priority: 0
+        );
+
+        task.SetPriority(priority);
+        task.Priority.Should().Be(priority);
+    }
 }

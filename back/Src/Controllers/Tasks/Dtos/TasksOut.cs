@@ -1,10 +1,10 @@
 namespace Taskill.Controllers;
 
-public class TaskOut
+public class TasksOut
 {
-    public uint id { get; set; }
+    public uint? id { get; set; }
 
-    public uint projectId { get; set; }
+    public uint? projectId { get; set; }
 
     public string title { get; set; }
 
@@ -12,17 +12,20 @@ public class TaskOut
 
     public byte priority { get; set; }
 
-    public DateTime? completionDate { get; set; }
+    public DateTime creationDate { get; set; }
 
-    public TaskOut() { }
+    public DateTime? dueDate { get; set; }
 
-    public TaskOut(Domain.Task task)
+    public TasksOut() { }
+
+    public TasksOut(Domain.Task task)
     {
         id = task.Id;
         projectId = task.ProjectId;
         title = task.Title;
         description = task.Description;
         priority = task.Priority;
-        completionDate = task.CompletionDate;
+        creationDate = task.CreationDate;
+        dueDate = task.DueDate;
     }
 }

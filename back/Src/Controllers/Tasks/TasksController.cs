@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Taskill.Database;
 using Taskill.Extensions;
 using Taskill.Services.Tasks;
@@ -32,16 +31,58 @@ public class TasksController : ControllerBase
         return Ok(new TaskOut(task));
     }
 
+    [HttpPut("{id}/complete")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> CompleteTask([FromRoute] uint id)
+    {
+        await _tasksService.CompleteTask(User.Id(), id);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/uncomplete")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> UncompleteTask([FromRoute] uint id)
+    {
+        await _tasksService.UncompleteTask(User.Id(), id);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/priority/{newPriority}")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskPriority([FromRoute] uint id, [FromRoute] byte newPriority)
+    {
+        await _tasksService.ChangeTaskPriority(User.Id(), id, newPriority);
+
+        return NoContent();
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(TaskOut), 200)]
+    public async Task<IActionResult> GetTask([FromRoute] uint id)
+    {
+        var task = await _tasksService.GetTask(User.Id(), id);
+
+        return Ok(new TaskOut(task));
+    }
+
     [HttpGet("")]
+    [ProducesResponseType(typeof(List<TasksOut>), 200)]
     public async Task<IActionResult> GetAllTasks()
     {
-        var userId = User.Id();
+        var tasks = await _tasksService.GetTasks(User.Id());
 
-        var tasks = await _context.Tasks
-            .Where(t => t.UserId == userId).ToListAsync();
-
-        return Ok(tasks);
+        return Ok(tasks.ConvertAll(t => new TasksOut(t)));
     }
+
+
+
+
+
+
+
+
 
     [HttpGet("db"), AllowAnonymous]
     public async Task<IActionResult> SeedDb()

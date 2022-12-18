@@ -8,6 +8,8 @@ public static class EfCoreConfigs
 {
     public static void AddEfCoreConfigs(this IServiceCollection services)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         var databaseSettings = services.BuildServiceProvider().GetService<DatabaseSettings>()!;
 
         services.AddDbContext<TaskillDbContext>(options =>

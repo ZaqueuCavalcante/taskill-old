@@ -19,6 +19,8 @@ public class Task
 
     public DateTime CreationDate { get; set; }
 
+    public DateTime? CompletionDate { get; set; }
+
     public DateTime? DueDate { get; set; }
 
     public List<Label> Labels { get; set; }
@@ -48,7 +50,7 @@ public class Task
         Title = title;
     }
 
-    private void SetPriority(byte priority)
+    public void SetPriority(byte priority)
     {
         if (priority > 3)
         {
@@ -56,5 +58,15 @@ public class Task
         }
 
         Priority = priority;
+    }
+
+    public void Complete()
+    {
+        CompletionDate = DateTime.Now;
+    }
+
+    public void Uncomplete()
+    {
+        CompletionDate = null;
     }
 }

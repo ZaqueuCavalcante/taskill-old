@@ -69,6 +69,29 @@ public class ApiTestBase
         _client.DefaultRequestHeaders.Remove("Authorization");
         _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {tokens.access_token}");
     }
+
+    protected async Task<uint> CreateTask(string title = "Finish this project")
+    {
+        var data = new TaskIn
+        {
+            title = title,
+        };
+
+        var response = await _client.PostAsync("/tasks", data.ToStringContent());
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var task = await response.DeserializeTo<TaskOut>();
+
+        return task.id;
+    }
+
+    protected async Task<TaskOut> GetTask(uint id)
+    {
+        var response = await _client.GetAsync($"/tasks/{id}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        return await response.DeserializeTo<TaskOut>();
+    }
 }
 
 public static class Extensions

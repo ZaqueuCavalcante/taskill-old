@@ -72,4 +72,63 @@ public class TasksIntegrationTests : ApiTestBase
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         error.error.Should().Be("The task priority should be 0, 1, 2 or 3.");
     }
+
+    [Test]
+    public async Task Deve_marcar_uma_task_como_concluida()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+        var taskId = await CreateTask();
+
+        // Act
+        var response = await _client.PutAsync($"/tasks/{taskId}/complete", null);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var task = await GetTask(taskId);
+
+        task.completionDate.Should().NotBeNull();
+    }
+
+    [Test]
+    public async Task Deve_marcar_uma_task_como_inconcluida()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+        var taskId = await CreateTask();
+        await _client.PutAsync($"/tasks/complete/{taskId}", null);
+
+        // Act
+        var response = await _client.PutAsync($"/tasks/{taskId}/uncomplete", null);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var task = await GetTask(taskId);
+
+        task.completionDate.Should().BeNull();
+    }
+
+    [Test]
+    public async Task Deve_mudar_a_prioridade_de_uma_task()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+        var taskId = await CreateTask();
+        const byte newPriority = 3;
+
+        // Act
+        var response = await _client.PutAsync($"/tasks/{taskId}/priority/{newPriority}", null);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var task = await GetTask(taskId);
+
+        task.priority.Should().Be(newPriority);
+    }
 }
