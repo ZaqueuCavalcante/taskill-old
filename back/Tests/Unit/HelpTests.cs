@@ -49,4 +49,28 @@ public static class Streams
             yield return new object[] { title };
         }
     }
+
+    private static readonly List<string> InvalidProjectNames = new()
+    {
+        null, "", "a", "", " ", "  ", "     ", "La", "Pr",
+    };
+    public static IEnumerable<object[]> InvalidProjectNamesStream()
+    {
+        foreach (var name in InvalidProjectNames)
+        {
+            yield return new object[] { name };
+        }
+    }
+
+    private static readonly List<string> ValidProjectNames = new()
+    {
+        "Taskill", "English", "Cloud", "DevOps",
+    };
+    public static IEnumerable<object[]> ValidProjectNamesStream()
+    {
+        foreach (var name in ValidProjectNames)
+        {
+            yield return new object[] { name };
+        }
+    }
 }

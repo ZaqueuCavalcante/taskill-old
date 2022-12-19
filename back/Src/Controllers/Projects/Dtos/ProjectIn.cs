@@ -1,6 +1,6 @@
 namespace Taskill.Controllers;
 
-public class LabelIn
+public class ProjectIn
 {
     public string name { get; set; }
 }

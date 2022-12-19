@@ -87,7 +87,7 @@ public class TasksController : ControllerBase
 
     [HttpGet("")]
     [ProducesResponseType(typeof(List<TasksOut>), 200)]
-    public async Task<IActionResult> GetAllTasks()
+    public async Task<IActionResult> GetTasks()
     {
         var tasks = await _tasksService.GetTasks(User.Id());
 
