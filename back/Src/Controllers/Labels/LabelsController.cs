@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Taskill.Database;
-using Taskill.Domain;
 using Taskill.Extensions;
+using Taskill.Services.Labels;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
@@ -12,41 +10,46 @@ namespace Taskill.Controllers;
 [Authorize(Roles = TaskillerRole)]
 public class LabelsController : ControllerBase
 {
-    private readonly TaskillDbContext _context;
+    private readonly ILabelsService _labelsService;
 
-    public LabelsController(TaskillDbContext context)
+    public LabelsController(ILabelsService labelsService)
     {
-        _context = context;
+        _labelsService = labelsService;
     }
 
     [HttpPost("")]
-    public async Task<IActionResult> CreateNewLabel([FromBody] LabelIn data)
+    [ProducesResponseType(typeof(LabelOut), 200)]
+    public async Task<IActionResult> CreateLabel([FromBody] LabelIn data)
     {
-        var userId = User.Id();
+        var label = await _labelsService.CreateLabel(User.Id(), data.name);
 
-        var labelAlreadyExists = await _context.Labels
-            .AnyAsync(l => l.UserId == userId && l.Name == data.name);
-        if (labelAlreadyExists)
-        {
-            return NoContent();
-        }
+        return Ok(new LabelOut(label));
+    }
 
-        var label = new Label(userId, data.name);
-
-        _context.Add(label);
-        await _context.SaveChangesAsync();
+    [HttpPut("{id}")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> RenameLabel([FromRoute] uint id, [FromBody] LabelIn data)
+    {
+        await _labelsService.RenameLabel(User.Id(), id, data.name);
 
         return NoContent();
     }
 
-    [HttpGet("")]
-    public async Task<IActionResult> GetAllLabels()
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ProjectOut), 200)]
+    public async Task<IActionResult> GetLabel([FromRoute] uint id)
     {
-        var userId = User.Id();
+        var label = await _labelsService.GetLabel(User.Id(), id);
 
-        var labels = await _context.Labels
-            .Where(l => l.UserId == userId).ToListAsync();
+        return Ok(new LabelOut(label));
+    }
 
-        return Ok(labels);
+    [HttpGet("")]
+    [ProducesResponseType(typeof(List<LabelOut>), 200)]
+    public async Task<IActionResult> GetLabels()
+    {
+        var labels = await _labelsService.GetLabels(User.Id());
+
+        return Ok(labels.ConvertAll(l => new LabelOut(l)));
     }
 }

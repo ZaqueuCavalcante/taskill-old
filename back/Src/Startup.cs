@@ -1,6 +1,7 @@
 using Taskill.Configs;
 using Taskill.Exceptions;
 using Taskill.Services.Auth;
+using Taskill.Services.Labels;
 using Taskill.Services.Projects;
 using Taskill.Services.Tasks;
 using Taskill.Settings;
@@ -17,6 +18,7 @@ public class Startup
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITasksService, TasksService>();
         services.AddScoped<IProjectsService, ProjectsService>();
+        services.AddScoped<ILabelsService, LabelsService>();
 
         services.AddRouting(options => options.LowercaseUrls = true);
 

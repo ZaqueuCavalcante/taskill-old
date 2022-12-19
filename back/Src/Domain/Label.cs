@@ -1,3 +1,6 @@
+using Taskill.Exceptions;
+using Taskill.Extensions;
+
 namespace Taskill.Domain;
 
 public class Label
@@ -15,7 +18,17 @@ public class Label
     public Label(uint userId, string name)
     {
         UserId = userId;
-        Name = name;
+        SetName(name);
         CreationDate = DateTime.UtcNow;
+    }
+
+    public void SetName(string name)
+    {
+        if (name.IsEmpty() || name.Length < 3)
+        {
+            throw new DomainException("The label name should be contains more that 3 letters.");
+        }
+
+        Name = name;
     }
 }
