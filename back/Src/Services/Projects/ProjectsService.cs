@@ -53,12 +53,20 @@ public class ProjectsService : IProjectsService
 
     public async Task<Project> GetProject(uint userId, uint id)
     {
-        var project = await _context.Projects.FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
+        var project = await _context.Projects
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
 
         if (project == null)
         {
             throw new DomainException("Project not found.", 404);
         }
+
+        project.Tasks = await _context.Tasks
+            .AsNoTracking()
+            .Where(t => t.UserId == userId && t.ProjectId == id)
+            .OrderByDescending(t => t.CreationDate)
+            .ToListAsync();
 
         return project;
     }
@@ -66,6 +74,7 @@ public class ProjectsService : IProjectsService
     public async Task<List<Project>> GetProjects(uint userId)
     {
         return await _context.Projects
+            .AsNoTracking()
             .Where(p => p.UserId == userId)
             .OrderByDescending(p => p.CreationDate)
             .ToListAsync();

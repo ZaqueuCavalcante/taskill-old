@@ -14,6 +14,12 @@ public interface ITasksService
     Task ChangeTaskTitle(uint userId, uint taskId, string title);
     Task ChangeTaskDescription(uint userId, uint taskId, string description);
 
+    Task ChangeTaskProject(uint userId, uint taskId, uint projectId);
+
+    Task ChangeTaskLabels(uint userId, uint taskId, List<uint> labels);
+
+    Task ChangeTaskDueDate(uint userId, uint taskId, DateTime? dueDate);
+
     Task<Domain.Task> GetTask(uint userId, uint taskId);
 
     Task<List<Domain.Task>> GetTasks(uint userId);

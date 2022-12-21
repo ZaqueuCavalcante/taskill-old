@@ -76,6 +76,33 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}/project/{newProjectId}")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskProject([FromRoute] uint id, [FromRoute] uint newProjectId)
+    {
+        await _tasksService.ChangeTaskProject(User.Id(), id, newProjectId);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/labels")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskLabels([FromRoute] uint id, [FromBody] TaskLabelsIn data)
+    {
+        await _tasksService.ChangeTaskLabels(User.Id(), id, data.labels);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/due-date")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeTaskDueDate([FromRoute] uint id, [FromBody] TaskDueDateIn data)
+    {
+        await _tasksService.ChangeTaskDueDate(User.Id(), id, data.dueDate);
+
+        return NoContent();
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(TaskOut), 200)]
     public async Task<IActionResult> GetTask([FromRoute] uint id)

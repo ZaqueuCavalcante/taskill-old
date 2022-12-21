@@ -33,7 +33,7 @@ public class Task
         byte priority
     ) {
         UserId = userId;
-        ProjectId = projectId;
+        SetProject(projectId);
         SetTitle(title);
         SetDescription(description);
         SetPriority(priority);
@@ -63,6 +63,21 @@ public class Task
     public void SetDescription(string? description)
     {
         Description = description;
+    }
+
+    public void SetProject(uint projectId)
+    {
+        ProjectId = projectId;
+    }
+
+    public void SetLabels(List<Label> labels)
+    {
+        Labels = labels;
+    }
+
+    public void SetDueDate(DateTime? dueDate)
+    {
+        DueDate = dueDate;
     }
 
     public void Complete()

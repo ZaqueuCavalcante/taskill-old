@@ -10,12 +10,15 @@ public class ProjectOut
 
     public DateTime creationDate { get; set; }
 
-    public ProjectOut() {}
+    public List<TaskOut> tasks { get; set; }
+
+    public ProjectOut() { }
 
     public ProjectOut(Project project)
     {
         id = project.Id;
         name = project.Name;
         creationDate = project.CreationDate;
+        tasks = project.Tasks?.ConvertAll(t => new TaskOut(t)) ?? new();
     }
 }

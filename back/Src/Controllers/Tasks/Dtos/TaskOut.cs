@@ -12,7 +12,13 @@ public class TaskOut
 
     public byte priority { get; set; }
 
+    public DateTime creationDate { get; set; }
+
+    public DateTime? dueDate { get; set; }
+
     public DateTime? completionDate { get; set; }
+
+    public List<TaskLabelOut> labels { get; set; }
 
     public TaskOut() { }
 
@@ -23,6 +29,9 @@ public class TaskOut
         title = task.Title;
         description = task.Description;
         priority = task.Priority;
+        creationDate = task.CreationDate;
+        dueDate = task.DueDate;
         completionDate = task.CompletionDate;
+        labels = task.Labels?.ConvertAll(l => new TaskLabelOut(l)) ?? new();
     }
 }

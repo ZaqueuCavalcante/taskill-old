@@ -102,9 +102,62 @@ public class TasksService : ITasksService
         await _context.SaveChangesAsync();
     }
 
+    public async Task ChangeTaskProject(uint userId, uint taskId, uint projectId)
+    {
+        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        var project = await _context.Projects.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.UserId == userId && p.Id == projectId);
+        if (project == null)
+        {
+            throw new DomainException("Project not found.", 404);
+        }
+
+        task.SetProject(projectId);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ChangeTaskLabels(uint userId, uint taskId, List<uint> labels)
+    {
+        var task = await _context.Tasks
+            .Include(t => t.Labels)
+            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        var userLabels = await _context.Labels.AsNoTracking()
+            .Where(l => l.UserId == userId && labels.Contains(l.Id)).ToListAsync();
+
+        task.SetLabels(userLabels);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task ChangeTaskDueDate(uint userId, uint taskId, DateTime? dueDate)
+    {
+        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        task.SetDueDate(dueDate);
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<Domain.Task> GetTask(uint userId, uint taskId)
     {
         var task = await _context.Tasks
+            .AsNoTracking()
+            .Include(t => t.Labels)
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
@@ -118,6 +171,7 @@ public class TasksService : ITasksService
     public async Task<List<Domain.Task>> GetTasks(uint userId)
     {
         return await _context.Tasks
+            .AsNoTracking()
             .Where(t => t.UserId == userId)
             .OrderByDescending(t => t.CreationDate)
             .ToListAsync();
