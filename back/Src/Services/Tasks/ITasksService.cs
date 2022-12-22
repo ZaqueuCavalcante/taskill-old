@@ -1,6 +1,6 @@
 ﻿using Taskill.Controllers;
 
-namespace Taskill.Services.Tasks;
+namespace Taskill.Services;
 
 public interface ITasksService
 {

@@ -2,9 +2,10 @@
 using Taskill.Database;
 using Taskill.Domain;
 using Taskill.Exceptions;
+using Taskill.Extensions;
 using Task = System.Threading.Tasks.Task;
 
-namespace Taskill.Services.Projects;
+namespace Taskill.Services;
 
 public class ProjectsService : IProjectsService
 {
@@ -51,6 +52,24 @@ public class ProjectsService : IProjectsService
         await _context.SaveChangesAsync();
     }
 
+    public async Task ChangeProjectTaskIndex(uint userId, uint id, int oldIndex, int newIndex)
+    {
+        var project = await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
+        if (project == null)
+        {
+            throw new DomainException("Project not found.", 404);
+        }
+
+        var tasks = await _context.Tasks
+            .Where(t => t.UserId == userId && t.ProjectId == id)
+            .OrderBy(t => t.Index)
+            .ToListAsync();
+
+        tasks.MoveTask(oldIndex, newIndex);
+
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<Project> GetProject(uint userId, uint id)
     {
         var project = await _context.Projects
@@ -65,7 +84,7 @@ public class ProjectsService : IProjectsService
         project.Tasks = await _context.Tasks
             .AsNoTracking()
             .Where(t => t.UserId == userId && t.ProjectId == id)
-            .OrderByDescending(t => t.CreationDate)
+            .OrderBy(t => t.Index)
             .ToListAsync();
 
         return project;

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Taskill.Domain;
 using Taskill.Extensions;
+using Taskill.Settings;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Database;
@@ -15,7 +16,13 @@ public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>,
 
     public TaskillDbContext(DbContextOptions<TaskillDbContext> options) : base(options) { }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (Env.IsDevelopment())
+        {
+            optionsBuilder.EnableSensitiveDataLogging(true);
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

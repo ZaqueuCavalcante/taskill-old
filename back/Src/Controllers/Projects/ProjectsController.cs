@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskill.Extensions;
-using Taskill.Services.Projects;
+using Taskill.Services;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
@@ -31,6 +31,15 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> RenameProject([FromRoute] uint id, [FromBody] ProjectIn data)
     {
         await _projectsService.RenameProject(User.Id(), id, data.name);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/tasks/{oldIndex}/move-to/{newIndex}")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeProjectTaskIndex([FromRoute] uint id, [FromRoute] int oldIndex, [FromRoute] int newIndex)
+    {
+        await _projectsService.ChangeProjectTaskIndex(User.Id(), id, oldIndex, newIndex);
 
         return NoContent();
     }

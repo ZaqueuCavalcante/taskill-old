@@ -80,4 +80,33 @@ public class ProjectsIntegrationTests : ApiTestBase
 
         error.error.Should().Be("Already exists a project with this name.");
     }
+
+    [Test]
+    public async Task Deve_mudar_uma_task_da_primeira_posicao_para_a_terceira()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+
+        await CreateTask("First");
+        await CreateTask("Second");
+        await CreateTask("Third");
+        await CreateTask("Four");
+
+        const int oldIndex = 0;
+        const int newIndex = 2;
+
+        // Act
+        var response = await _client.PutAsync($"/projects/1/tasks/{oldIndex}/move-to/{newIndex}", null);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var project = await GetProject(1);
+
+        project.tasks[0].title.Should().Be("Second");
+        project.tasks[1].title.Should().Be("Third");
+        project.tasks[2].title.Should().Be("First");
+        project.tasks[3].title.Should().Be("Four");
+    }
 }

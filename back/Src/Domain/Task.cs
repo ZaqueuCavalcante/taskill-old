@@ -23,20 +23,26 @@ public class Task
 
     public DateTime? DueDate { get; set; }
 
+    public int Index { get; set; }
+
     public List<Label> Labels { get; set; }
+
+    public Task() { }
 
     public Task(
         uint userId,
         uint projectId,
         string title,
         string? description,
-        byte priority
+        byte priority,
+        int position = 0
     ) {
         UserId = userId;
         SetProject(projectId);
         SetTitle(title);
         SetDescription(description);
         SetPriority(priority);
+        SetIndex(position);
         CreationDate = DateTime.UtcNow;
     }
 
@@ -78,6 +84,11 @@ public class Task
     public void SetDueDate(DateTime? dueDate)
     {
         DueDate = dueDate;
+    }
+
+    public void SetIndex(int index)
+    {
+        Index = index;
     }
 
     public void Complete()

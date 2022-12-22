@@ -11,7 +11,7 @@ using Taskill.Settings;
 using static Taskill.Configs.AuthorizationConfigs;
 using Task = System.Threading.Tasks.Task;
 
-namespace Taskill.Services.Auth;
+namespace Taskill.Services;
 
 public class AuthService : IAuthService
 {

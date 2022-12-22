@@ -1,6 +1,6 @@
 ﻿using Taskill.Controllers;
 
-namespace Taskill.Services.Auth;
+namespace Taskill.Services;
 
 public interface IAuthService
 {

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskill.Database;
 using Taskill.Extensions;
-using Taskill.Services.Tasks;
+using Taskill.Services;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
@@ -11,14 +11,10 @@ namespace Taskill.Controllers;
 [Authorize(Roles = TaskillerRole)]
 public class TasksController : ControllerBase
 {
-    private readonly TaskillDbContext _context;
     private readonly ITasksService _tasksService;
 
-    public TasksController(
-        TaskillDbContext context,
-        ITasksService tasksService
-    ) {
-        _context = context;
+    public TasksController(ITasksService tasksService)
+    {
         _tasksService = tasksService;
     }
 
@@ -121,16 +117,8 @@ public class TasksController : ControllerBase
         return Ok(tasks.ConvertAll(t => new TasksOut(t)));
     }
 
-
-
-
-
-
-
-
-
     [HttpGet("db"), AllowAnonymous]
-    public async Task<IActionResult> SeedDb()
+    public async Task<IActionResult> SeedDb([FromServices] TaskillDbContext _context)
     {
         await _context.Database.EnsureDeletedAsync();
         await _context.Database.EnsureCreatedAsync();

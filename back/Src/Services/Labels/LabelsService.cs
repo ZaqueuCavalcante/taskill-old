@@ -4,7 +4,7 @@ using Taskill.Domain;
 using Taskill.Exceptions;
 using Task = System.Threading.Tasks.Task;
 
-namespace Taskill.Services.Labels;
+namespace Taskill.Services;
 
 public class LabelsService : ILabelsService
 {

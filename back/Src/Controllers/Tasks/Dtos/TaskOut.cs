@@ -18,6 +18,8 @@ public class TaskOut
 
     public DateTime? completionDate { get; set; }
 
+    public int index { get; set; }
+
     public List<TaskLabelOut> labels { get; set; }
 
     public TaskOut() { }
@@ -32,6 +34,7 @@ public class TaskOut
         creationDate = task.CreationDate;
         dueDate = task.DueDate;
         completionDate = task.CompletionDate;
+        index = task.Index;
         labels = task.Labels?.ConvertAll(l => new TaskLabelOut(l)) ?? new();
     }
 }

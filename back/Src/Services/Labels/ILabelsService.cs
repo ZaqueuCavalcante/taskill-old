@@ -1,7 +1,7 @@
 ﻿using Taskill.Domain;
 using Task = System.Threading.Tasks.Task;
 
-namespace Taskill.Services.Labels;
+namespace Taskill.Services;
 
 public interface ILabelsService
 {

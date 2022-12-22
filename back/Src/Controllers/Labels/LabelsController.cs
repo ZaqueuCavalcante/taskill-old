@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskill.Extensions;
-using Taskill.Services.Labels;
+using Taskill.Services;
 using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;

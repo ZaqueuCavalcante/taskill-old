@@ -92,21 +92,12 @@ public class ApiTestBase
 
         return await response.DeserializeTo<TaskOut>();
     }
-}
 
-public static class Extensions
-{
-    public static StringContent ToStringContent(this object obj)
+    protected async Task<ProjectOut> GetProject(uint id)
     {
-        var serializedObject = JsonConvert.SerializeObject(obj);
-        return new StringContent(serializedObject, Encoding.UTF8, "application/json");
-    }
+        var response = await _client.GetAsync($"/projects/{id}");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-    public static async Task<T> DeserializeTo<T>(this HttpResponseMessage httpResponse)
-    {
-        var responseAsString = await httpResponse.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<T>(responseAsString);
+        return await response.DeserializeTo<ProjectOut>();
     }
 }
-
-public class ErrorDto { public string error { get; set; } = ""; }

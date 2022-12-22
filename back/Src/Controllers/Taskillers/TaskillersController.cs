@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Taskill.Services.Auth;
+using Taskill.Services;
 
 namespace Taskill.Controllers;
 

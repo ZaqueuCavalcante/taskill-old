@@ -8,6 +8,11 @@ https://dineshchandgr.medium.com/do-you-know-about-oauth2-protocol-and-its-diffe
 
 - Adicionar suporte a times (roles e policies para cada ação)
 - Salvar ordem das tasks dentro de um projeto
+- Lucene.NET para busca em todas as tasks, projects, labels...
+- Testes de mutação
+- Login com OAuth 2.0, OpenID Connect
+- CI/CD pipeline no GitHub
+- Subir o projeto com Docker + Compose
 
 # Criação de um Taskiller
 
@@ -15,4 +20,14 @@ https://dineshchandgr.medium.com/do-you-know-about-oauth2-protocol-and-its-diffe
 
 # Criação de uma Task
 
+-
+
+# POST
+
+- DDD para modelagem do domónio
+- EF Core para modelagem relacional e para interação com o banco de dados (Postgres)
+- Identity para autenticação com JWT
+- Documentação com o Swagger
+- Testes unitários e de integração, usando NUnit + FluentAssertions
+- TDD para o algoritmo de reordenação das tasks dentro de um projeto
 -

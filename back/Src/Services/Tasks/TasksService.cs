@@ -3,7 +3,7 @@ using Taskill.Controllers;
 using Taskill.Database;
 using Taskill.Exceptions;
 
-namespace Taskill.Services.Tasks;
+namespace Taskill.Services;
 
 public class TasksService : ITasksService
 {
@@ -29,7 +29,9 @@ public class TasksService : ITasksService
                 .Select(p => p.Id).FirstAsync();
         }
 
-        var task = new Domain.Task(userId, projectId, data.title, data.description, data.priority);
+        var taskPosition = await _context.Tasks.CountAsync(t => t.ProjectId == projectId);
+
+        var task = new Domain.Task(userId, projectId, data.title, data.description, data.priority, taskPosition);
 
         _context.Add(task);
         await _context.SaveChangesAsync();
