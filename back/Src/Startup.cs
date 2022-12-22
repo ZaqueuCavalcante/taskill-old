@@ -23,6 +23,8 @@ public class Startup
 
     public static void Configure(IApplicationBuilder app)
     {
+        app.SetupDatabase();
+
         app.UseRouting();
 
         app.UseDomainExceptions();

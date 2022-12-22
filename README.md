@@ -2,6 +2,12 @@
 
 A simple TODO app.
 
+## Como subir a API
+
+- Você vai precisar do Docker instalado na sua máquina
+- Entre na pasta `back` e rode o comando `docker build -t taskill .` para criar uma imagem com a aplicação ASP.NET
+- 
+
 ## A definir
 
 - Dá pra usar o app sem criar usuário?
