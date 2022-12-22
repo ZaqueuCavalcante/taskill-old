@@ -117,6 +117,15 @@ public class TasksController : ControllerBase
         return Ok(tasks.ConvertAll(t => new TasksOut(t)));
     }
 
+    [HttpGet("search/{text}")]
+    [ProducesResponseType(typeof(List<TasksOut>), 200)]
+    public async Task<IActionResult> SearchTasks([FromRoute] string text)
+    {
+        var tasks = await _tasksService.SearchTasks(User.Id(), text);
+
+        return Ok(tasks.ConvertAll(t => new TasksOut(t)));
+    }
+
     [HttpGet("db"), AllowAnonymous]
     public async Task<IActionResult> SeedDb([FromServices] TaskillDbContext _context)
     {

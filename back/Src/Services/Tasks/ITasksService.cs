@@ -23,4 +23,6 @@ public interface ITasksService
     Task<Domain.Task> GetTask(uint userId, uint taskId);
 
     Task<List<Domain.Task>> GetTasks(uint userId);
+
+    Task<List<Domain.Task>> SearchTasks(uint userId, string text);
 }

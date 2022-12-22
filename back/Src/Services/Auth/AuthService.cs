@@ -9,6 +9,7 @@ using Taskill.Domain;
 using Taskill.Exceptions;
 using Taskill.Settings;
 using static Taskill.Configs.AuthorizationConfigs;
+using static Taskill.Extensions.ProjectExtensions;
 using Task = System.Threading.Tasks.Task;
 
 namespace Taskill.Services;
@@ -45,7 +46,7 @@ public class AuthService : IAuthService
 
         await _userManager.AddToRoleAsync(user, TaskillerRole);
 
-        var project = new Project(user.Id, "Today");
+        var project = new Project(user.Id, DefaultProjectName);
 
         _context.Add(project);
         await _context.SaveChangesAsync();

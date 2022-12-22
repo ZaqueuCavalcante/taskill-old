@@ -114,7 +114,7 @@ CREATE TABLE taskill.tasks (
     creation_date timestamp without time zone NOT NULL,
     completion_date timestamp without time zone NULL,
     due_date timestamp without time zone NULL,
-    position bigint NOT NULL,
+    index integer NOT NULL,
     CONSTRAINT pk_tasks PRIMARY KEY (id),
     CONSTRAINT fk_tasks_projects_project_id FOREIGN KEY (project_id) REFERENCES taskill.projects (id) ON DELETE CASCADE,
     CONSTRAINT fk_tasks_users_taskiller_id FOREIGN KEY (user_id) REFERENCES taskill.asp_net_users (id) ON DELETE CASCADE
@@ -131,7 +131,7 @@ CREATE TABLE taskill.tasks_labels (
 
 
 INSERT INTO taskill.asp_net_roles (id, concurrency_stamp, name, normalized_name)
-VALUES (1, '4375e7a8-cc1a-4dea-95b7-e4e9e52ffb00', 'taskiller', 'TASKILLER');
+VALUES (1, '680a5f28-e4e4-44c4-83e1-3018d7a7cd68', 'taskiller', 'TASKILLER');
 
 
 CREATE INDEX ix_asp_net_role_claims_role_id ON taskill.asp_net_role_claims (role_id);
@@ -161,10 +161,10 @@ CREATE INDEX ix_labels_user_id ON taskill.labels (user_id);
 CREATE INDEX ix_projects_user_id ON taskill.projects (user_id);
 
 
-CREATE UNIQUE INDEX ix_tasks_position ON taskill.tasks (position);
-
-
 CREATE INDEX ix_tasks_project_id ON taskill.tasks (project_id);
+
+
+CREATE INDEX ix_tasks_title_description ON taskill.tasks USING GIN (to_tsvector('portuguese', title || ' ' || coalesce(description, '')));
 
 
 CREATE INDEX ix_tasks_user_id ON taskill.tasks (user_id);

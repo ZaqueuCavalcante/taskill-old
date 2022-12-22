@@ -2,6 +2,7 @@
 using Taskill.Controllers;
 using Taskill.Database;
 using Taskill.Exceptions;
+using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Services;
 
@@ -25,7 +26,7 @@ public class TasksService : ITasksService
         else
         {
             projectId = await _context.Projects
-                .Where(p => p.UserId == userId && p.Name == "Today")
+                .Where(p => p.UserId == userId && p.Name == DefaultProjectName)
                 .Select(p => p.Id).FirstAsync();
         }
 
@@ -175,6 +176,18 @@ public class TasksService : ITasksService
         return await _context.Tasks
             .AsNoTracking()
             .Where(t => t.UserId == userId)
+            .OrderByDescending(t => t.CreationDate)
+            .ToListAsync();
+    }
+
+    public async Task<List<Domain.Task>> SearchTasks(uint userId, string text)
+    {
+        return await _context.Tasks
+            .AsNoTracking()
+            .Where(t =>
+                t.UserId == userId &&
+                EF.Functions.ToTsVector("portuguese", t.Title + " " + t.Description).Matches(text)
+            )
             .OrderByDescending(t => t.CreationDate)
             .ToListAsync();
     }

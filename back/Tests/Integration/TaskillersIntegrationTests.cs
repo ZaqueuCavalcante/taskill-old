@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using Taskill.Controllers;
 using Task = System.Threading.Tasks.Task;
+using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Tests.Integration;
 
@@ -26,7 +27,7 @@ public class TaskillersIntegrationTests : ApiTestBase
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         projects.Count.Should().Be(1);
-        projects[0].name.Should().Be("Today");
+        projects[0].name.Should().Be(DefaultProjectName);
     }
 
     [Test]

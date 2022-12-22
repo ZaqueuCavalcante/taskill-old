@@ -1,8 +1,11 @@
+using Task = Taskill.Domain.Task;
+
 namespace Taskill.Extensions;
-using Task = Domain.Task;
 
 public static class ProjectExtensions
 {
+    public const string DefaultProjectName = "Inbox";
+
     public static List<Task> MoveTask(this List<Task> tasks, int startIndex, int endIndex)
     {
         if (endIndex == startIndex || tasks.Count == 1) return tasks;

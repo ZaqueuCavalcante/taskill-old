@@ -3,6 +3,7 @@ using FluentAssertions;
 using NUnit.Framework;
 using Taskill.Controllers;
 using Task = System.Threading.Tasks.Task;
+using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Tests.Integration;
 
@@ -68,7 +69,7 @@ public class ProjectsIntegrationTests : ApiTestBase
             name = "Taskill",
         };
         await _client.PostAsync("/projects", projectIn.ToStringContent());
-        projectIn.name = "Today";
+        projectIn.name = DefaultProjectName;
 
         // Act
         var response = await _client.PutAsync("/projects/2", projectIn.ToStringContent());

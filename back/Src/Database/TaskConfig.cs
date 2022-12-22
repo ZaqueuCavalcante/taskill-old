@@ -24,5 +24,9 @@ public class TaskConfig : IEntityTypeConfiguration<Domain.Task>
                 joinEntityName: "TasksLabels",
                 configureRight: b => b.HasOne<Label>().WithMany().HasForeignKey("LabelId"),
                 configureLeft: b => b.HasOne<Domain.Task>().WithMany().HasForeignKey("TaskId"));
+
+        task.HasIndex(t => new { t.Title, t.Description })
+            .HasMethod("GIN")
+            .IsTsVectorExpressionIndex("portuguese");
     }
 }
