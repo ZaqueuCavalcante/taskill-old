@@ -1,5 +1,6 @@
 using Taskill.Exceptions;
 using Taskill.Extensions;
+using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Domain;
 
@@ -27,6 +28,11 @@ public class Project
         if (name.IsEmpty() || name.Length < 3)
         {
             throw new DomainException("The project name should be contains more that 3 letters.");
+        }
+
+        if (Name == DefaultProjectName)
+        {
+            throw new DomainException("The default project name is immutable.");
         }
 
         Name = name;

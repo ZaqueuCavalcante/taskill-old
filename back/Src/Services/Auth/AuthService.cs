@@ -71,7 +71,6 @@ public class AuthService : IAuthService
         return new AccessTokenOut
         {
             access_token = accessToken,
-            refresh_token = "refreshToken",
             expires_in = _authSettings.JwtExpirationTimeInMinutes,
             token_type = "Bearer",
         };

@@ -11,16 +11,13 @@ namespace Taskill.Tests.Integration;
 public class ProjectsIntegrationTests : ApiTestBase
 {
     [Test]
-    public async Task Deve_criar_um_novo_projeto()
+    public async Task Should_create_a_new_project()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
 
-        var projectIn = new ProjectIn
-        {
-            name = "Taskill",
-        };
+        var projectIn = new ProjectIn { name = "Taskill" };
 
         // Act
         var response = await _client.PostAsync("/projects", projectIn.ToStringContent());
@@ -32,16 +29,13 @@ public class ProjectsIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Nao_deve_criar_um_novo_projeto_quando_ja_existir_um_com_o_mesmo_nome()
+    public async Task Not_should_create_a_duplicated_project()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
 
-        var projectIn = new ProjectIn
-        {
-            name = "Taskill",
-        };
+        var projectIn = new ProjectIn { name = "Taskill" };
 
         // Act
         await _client.PostAsync("/projects", projectIn.ToStringContent());
@@ -58,16 +52,13 @@ public class ProjectsIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Nao_deve_renomear_um_projeto_quando_ja_existir_um_com_o_mesmo_nome()
+    public async Task Not_should_rename_a_project__when_already_exists_another_with_same_name()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
 
-        var projectIn = new ProjectIn
-        {
-            name = "Taskill",
-        };
+        var projectIn = new ProjectIn { name = "Taskill" };
         await _client.PostAsync("/projects", projectIn.ToStringContent());
         projectIn.name = DefaultProjectName;
 
@@ -83,7 +74,7 @@ public class ProjectsIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_mudar_uma_task_da_primeira_posicao_para_a_terceira()
+    public async Task Inside_project__should_change_task_index_from_1_to_3()
     {
         // Arrange
         await CreateTaskiller();

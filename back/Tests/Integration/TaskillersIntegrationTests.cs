@@ -11,7 +11,7 @@ namespace Taskill.Tests.Integration;
 public class TaskillersIntegrationTests : ApiTestBase
 {
     [Test]
-    public async Task Na_criacao_de_um_taskiller__um_projeto_default_deve_ser_vinculado_a_ele()
+    public async Task On_taskiller_creation__should_link_a_default_project()
     {
         // Arrange
         const string email = "taskiller@gmail.com";
@@ -31,7 +31,7 @@ public class TaskillersIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Na_criacao_de_um_taskiller__deve_retornar_erro_caso_o_email_ja_pertenca_a_outro_usuario()
+    public async Task On_taskiller_creation__should_throw_error_when_email_is_duplicated()
     {
         // Arrange
         const string email = "taskiller@gmail.com";

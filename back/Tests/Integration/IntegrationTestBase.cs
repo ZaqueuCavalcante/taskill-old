@@ -1,9 +1,7 @@
 using System.Net;
-using System.Text;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Taskill.Controllers;
 using Taskill.Database;

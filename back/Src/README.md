@@ -1,28 +1,42 @@
 # Taskill Backend
 
-- Autenticação com OAuth 2.0 + Open ID Connect
+The Taskill Backend API.
 
-https://dineshchandgr.medium.com/do-you-know-about-oauth2-protocol-and-its-different-flows-9d849cec45b0
+## Features
 
-# Future Features
+- Taskillers:
+  - Criar usuário
+  - Fazer login
+- Tasks:
+  - Criar uma task
+  - Alterar uma task (título, descrição, prioridade, projeto, data de entrega, labels...)
+  - Marcar / desmarcar como concluída
+  - Visualizar uma ou várias
+  - Buscar tasks por palavra no título ou descrição
+  - Mudar a ordem delas dentro de um projeto
+- Projetos:
+  - Criar um projeto
+  - Alterar o nome
+  - Visualizar um ou vários
+- Labels:
+  - Criar uma label
+  - Alterar o nome
+  - Visualizar uma ou várias
 
+## Future Features
+
+- Sub-tasks to tasks
+- Project views (list / board) and sections
+- Reminders para alertar vencimento do prazo de entrega
+- Adicionar eventos / histórico de atividades (Activity Log)
+- Relatórios de produtividade
 - Adicionar suporte a times (roles e policies para cada ação)
-- Salvar ordem das tasks dentro de um projeto
 - Testes de mutação
-- Adicionar eventos / histórico de atividades (Igual tem no GitLab/TodoIst)
 - Login com OAuth 2.0, OpenID Connect
 - CI/CD pipeline no GitHub
 - Subir o projeto com Docker + Compose
 
-# Criação de um Taskiller
-
-- Deve ser criado um projeto, com o nome "Inbox", vinculado ao usuário.
-
-# Criação de uma Task
-
--
-
-# POST
+## POST
 
 - DDD para modelagem do domónio
 - EF Core para modelagem relacional e para interação com o banco de dados (Postgres)
@@ -32,4 +46,3 @@ https://dineshchandgr.medium.com/do-you-know-about-oauth2-protocol-and-its-diffe
 - Testes unitários e de integração, usando NUnit + FluentAssertions
 - TDD para o algoritmo de reordenação das tasks dentro de um projeto
 - Strongly typed classes to represent configuration information
--

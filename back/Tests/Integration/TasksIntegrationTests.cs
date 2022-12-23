@@ -10,7 +10,7 @@ namespace Taskill.Tests.Integration;
 public class TasksIntegrationTests : ApiTestBase
 {
     [Test]
-    public async Task Na_criacao_de_uma_task__quando_nao_for_informado_um_projeto__ela_deve_ser_vinculada_ao_default()
+    public async Task On_task_creation__when_the_project_is_not_defined__the_default_taskiller_project_should_be_used()
     {
         // Arrange
         await CreateTaskiller();
@@ -31,7 +31,7 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Na_criacao_de_uma_task__quando_nao_for_informada_a_prioridade__ela_deve_ser_zero()
+    public async Task On_task_creation__when_the_priority_is_not_defined__it_should_be_0()
     {
         // Arrange
         await CreateTaskiller();
@@ -52,7 +52,7 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Na_criacao_de_uma_task__quando_for_informada_uma_prioridade_invalida__deve_retornar_erro()
+    public async Task On_task_creation__when_the_priority_is_invalid__should_throw_error()
     {
         // Arrange
         await CreateTaskiller();
@@ -74,7 +74,7 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_marcar_uma_task_como_concluida()
+    public async Task Should_complete_task()
     {
         // Arrange
         await CreateTaskiller();
@@ -93,7 +93,7 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_marcar_uma_task_como_inconcluida()
+    public async Task Should_uncomplete_task()
     {
         // Arrange
         await CreateTaskiller();
@@ -113,7 +113,7 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_mudar_a_prioridade_de_uma_task()
+    public async Task Should_change_task_priority()
     {
         // Arrange
         await CreateTaskiller();
@@ -133,13 +133,13 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_mudar_o_titulo_de_uma_task()
+    public async Task Should_change_task_title()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
         var taskId = await CreateTask();
-        var data = new TaskTitleIn{ title = "New title to test endpoint lalala..." };
+        var data = new TaskTitleIn { title = "New title to test endpoint lalala..." };
 
         // Act
         var response = await _client.PutAsync($"/tasks/{taskId}/title", data.ToStringContent());
@@ -153,13 +153,13 @@ public class TasksIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task Deve_mudar_a_descricao_de_uma_task()
+    public async Task Should_change_task_description()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
         var taskId = await CreateTask();
-        var data = new TaskDescriptionIn{ description = "New description to test endpoint lalala..." };
+        var data = new TaskDescriptionIn { description = "New description to test endpoint lalala..." };
 
         // Act
         var response = await _client.PutAsync($"/tasks/{taskId}/description", data.ToStringContent());

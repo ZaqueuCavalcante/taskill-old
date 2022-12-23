@@ -4,6 +4,7 @@ using Taskill.Domain;
 using Taskill.Exceptions;
 using Taskill.Extensions;
 using Task = Taskill.Domain.Task;
+using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Tests.Unit;
 
@@ -36,6 +37,23 @@ public class ProjectsUnitTests
         // Assert
         act.Should().Throw<DomainException>()
             .WithMessage("The project name should be contains more that 3 letters.");
+    }
+
+    [Test]
+    public void On_default_project_rename__should_throw_error()
+    {
+        // Arrange
+        var project = new Project(
+            userId: 1,
+            name: DefaultProjectName
+        );
+
+        // Act
+        var act = () => project.SetName("NewProjectName");
+
+        // Assert
+        act.Should().Throw<DomainException>()
+            .WithMessage("The default project name is immutable.");
     }
 
     [Test]
