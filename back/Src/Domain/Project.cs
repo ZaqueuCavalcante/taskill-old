@@ -12,7 +12,11 @@ public class Project
 
     public string Name { get; set; }
 
+    public Layout Layout { get; set; }
+
     public DateTime CreationDate { get; set; }
+
+    public List<Section> Sections { get; set; }
 
     public List<Task> Tasks { get; set; }
 

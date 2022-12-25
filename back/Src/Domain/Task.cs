@@ -11,6 +11,8 @@ public class Task
 
     public uint ProjectId { get; set; }
 
+    public uint? SectionId { get; set; }
+
     public string Title { get; set; }
 
     public string? Description { get; set; }

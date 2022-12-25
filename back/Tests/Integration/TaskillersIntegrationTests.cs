@@ -50,4 +50,29 @@ public class TaskillersIntegrationTests : ApiTestBase
 
         error.error.Should().Be("Erro na criação do usuário.");
     }
+
+    [Test]
+    public async Task A_taskiller_do_not_should_see_another_taskiller_tasks()
+    {
+        // Arrange
+        const string joaoEmail = "joao@gmail.com";
+        const string zeEmail = "ze@gmail.com";
+        await CreateTaskiller(joaoEmail);
+        await CreateTaskiller(zeEmail);
+
+        await Login(joaoEmail);
+        var joaoTaskId = await CreateTask("Joao task");
+
+        await Login(zeEmail);
+
+        // Act
+        var response = await _client.GetAsync($"/tasks/{joaoTaskId}");
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        var error = await response.DeserializeTo<ErrorDto>();
+
+        error.error.Should().Be("Task not found.");
+    }
 }

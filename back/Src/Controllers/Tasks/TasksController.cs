@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Taskill.Database;
 using Taskill.Extensions;
 using Taskill.Services;
 using static Taskill.Configs.AuthorizationConfigs;
@@ -124,14 +123,5 @@ public class TasksController : ControllerBase
         var tasks = await _tasksService.SearchTasks(User.Id(), text);
 
         return Ok(tasks.ConvertAll(t => new TasksOut(t)));
-    }
-
-    [HttpGet("db"), AllowAnonymous]
-    public async Task<IActionResult> SeedDb([FromServices] TaskillDbContext _context)
-    {
-        await _context.Database.EnsureDeletedAsync();
-        await _context.Database.EnsureCreatedAsync();
-
-        return Ok();
     }
 }

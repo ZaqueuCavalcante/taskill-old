@@ -15,6 +15,7 @@ Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e aju
   - Fazer login
 - Tasks:
   - Criar uma task
+  - Adicionar sub-tasks a uma task
   - Alterar uma task (título, descrição, prioridade, projeto, data de entrega, labels...)
   - Marcar / desmarcar como concluída
   - Visualizar uma ou várias
@@ -43,10 +44,9 @@ Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e aju
 
 - Sub-tasks to tasks
 - Project views (list / board) and sections
-- Reminders para alertar vencimento do prazo de entrega
+- Reminders para alertar vencimento do prazo de entrega (Hangfire?) (Premium Users?)
 - Adicionar eventos / histórico de atividades (Activity Log)
 - Relatórios de produtividade
-- Adicionar suporte a times (roles e policies para cada ação)
 - Testes de mutação
 - Login com OAuth 2.0, OpenID Connect
 - CI/CD pipeline no GitHub
