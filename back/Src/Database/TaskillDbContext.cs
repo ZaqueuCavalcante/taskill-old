@@ -11,8 +11,12 @@ namespace Taskill.Database;
 public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>, uint>
 {
     public DbSet<Domain.Task> Tasks { get; set; }
+    public DbSet<Domain.Subtask> Subtasks { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<Label> Labels { get; set; }
+    public DbSet<Reminder> Reminders { get; set; }
+
+    public DbSet<Taskiller> Taskillers { get; set; }
 
     public TaskillDbContext(DbContextOptions<TaskillDbContext> options) : base(options) { }
 
@@ -41,6 +45,14 @@ public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>,
                 Name = TaskillerRole,
                 NormalizedName = TaskillerRole.ToUpper(),
                 ConcurrencyStamp = Guid.NewGuid().ToString(),
-            });
+            },
+            new IdentityRole<uint>()
+            {
+                Id = 2,
+                Name = PremiumRole,
+                NormalizedName = PremiumRole.ToUpper(),
+                ConcurrencyStamp = Guid.NewGuid().ToString(),
+            }
+        );
     }
 }

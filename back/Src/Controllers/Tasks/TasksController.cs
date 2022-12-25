@@ -26,6 +26,15 @@ public class TasksController : ControllerBase
         return Ok(new TaskOut(task));
     }
 
+    [HttpPost("sub")]
+    [ProducesResponseType(typeof(TaskOut), 200)]
+    public async Task<IActionResult> CreateSubtask([FromBody] SubtaskIn data)
+    {
+        var task = await _tasksService.CreateSubtask(User.Id(), data);
+
+        return Ok(new TaskOut(task));
+    }
+
     [HttpPut("{id}/complete")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> CompleteTask([FromRoute] uint id)
@@ -94,6 +103,16 @@ public class TasksController : ControllerBase
     public async Task<IActionResult> ChangeTaskDueDate([FromRoute] uint id, [FromBody] TaskDueDateIn data)
     {
         await _tasksService.ChangeTaskDueDate(User.Id(), id, data.dueDate);
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}/reminder")]
+    [Authorize(Roles = PremiumRole)]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> AddTaskReminder([FromRoute] uint id, [FromBody] TaskReminderIn data)
+    {
+        await _tasksService.AddTaskReminder(User.Id(), id, data.beforeInMinutes);
 
         return NoContent();
     }

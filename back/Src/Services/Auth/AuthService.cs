@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Taskill.Controllers;
 using Taskill.Database;
@@ -41,7 +42,7 @@ public class AuthService : IAuthService
 
         if (!result.Succeeded)
         {
-            throw new DomainException("Erro na criação do usuário.");
+            throw new DomainException("Error on taskiller creation.");
         }
 
         await _userManager.AddToRoleAsync(user, TaskillerRole);
@@ -74,6 +75,25 @@ public class AuthService : IAuthService
             expires_in = _authSettings.JwtExpirationTimeInMinutes,
             token_type = "Bearer",
         };
+    }
+
+    public async Task AddTaskillerToPremiumPlan(uint id, string token)
+    {
+        if (token != _authSettings.PremiumToken)
+        {
+            throw new DomainException("Invalid token.");
+        }
+
+        var taskiller = await _context.Taskillers.FirstOrDefaultAsync(t => t.Id == id);
+
+        if (taskiller == null)
+        {
+            throw new DomainException("Taskiller not found.", 404);
+        }
+
+        await _userManager.AddToRoleAsync(taskiller, PremiumRole);
+
+        await _context.SaveChangesAsync();
     }
 
     private async Task<string> GenerateJwt(string email)

@@ -48,7 +48,7 @@ public class TaskillersIntegrationTests : ApiTestBase
 
         var error = await response.DeserializeTo<ErrorDto>();
 
-        error.error.Should().Be("Erro na criação do usuário.");
+        error.error.Should().Be("Error on taskiller creation.");
     }
 
     [Test]

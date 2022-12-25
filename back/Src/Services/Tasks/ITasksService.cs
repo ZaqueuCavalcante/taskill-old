@@ -1,4 +1,6 @@
 ﻿using Taskill.Controllers;
+using Taskill.Domain;
+using Task = System.Threading.Tasks.Task;
 
 namespace Taskill.Services;
 
@@ -19,6 +21,10 @@ public interface ITasksService
     Task ChangeTaskLabels(uint userId, uint taskId, List<uint> labels);
 
     Task ChangeTaskDueDate(uint userId, uint taskId, DateTime? dueDate);
+
+    Task AddTaskReminder(uint userId, uint taskId, int? beforeInMinutes);
+
+    Task<Subtask> CreateSubtask(uint userId, SubtaskIn data);
 
     Task<Domain.Task> GetTask(uint userId, uint taskId);
 

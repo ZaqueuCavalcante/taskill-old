@@ -7,4 +7,6 @@ public interface IAuthService
     Task CreateTaskiller(string email, string password);
 
     Task<AccessTokenOut> Login(string email, string password);
+
+    Task AddTaskillerToPremiumPlan(uint id, string token);
 }

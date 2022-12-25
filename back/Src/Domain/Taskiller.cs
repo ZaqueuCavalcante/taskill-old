@@ -8,9 +8,12 @@ public class Taskiller : IdentityUser<uint>
     public List<Task> Tasks { get; set; }
     public List<Label> Labels { get; set; }
 
+    public int ReminderBeforeInMinutes { get; set; }
+
     public Taskiller(string email)
     {
         UserName = email;
         Email = email;
+        ReminderBeforeInMinutes = 30;
     }
 }

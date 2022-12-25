@@ -30,4 +30,13 @@ public class TaskillersController : ControllerBase
 
         return Ok(tokens);
     }
+
+    [HttpPut("premium")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> AddTaskillerToPremiumPlan([FromBody] PremiumPlanIn data)
+    {
+        await _authService.AddTaskillerToPremiumPlan(data.id, data.token);
+
+        return NoContent();
+    }
 }

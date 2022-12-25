@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Taskill.Controllers;
 using Taskill.Database;
+using Taskill.Domain;
 using Taskill.Exceptions;
+using Task = System.Threading.Tasks.Task;
 using static Taskill.Extensions.ProjectExtensions;
 
 namespace Taskill.Services;
@@ -38,6 +40,25 @@ public class TasksService : ITasksService
         await _context.SaveChangesAsync();
 
         return task;
+    }
+
+    public async Task<Subtask> CreateSubtask(uint userId, SubtaskIn data)
+    {
+        var task = await _context.Tasks.AsNoTracking()
+            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == data.parentTaskId);
+        if (task == null)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        var taskPosition = await _context.Subtasks.CountAsync(s => s.ParentTaskId == data.parentTaskId);
+
+        var subtask = new Subtask(userId, task.ProjectId, data.title, data.description, data.priority, data.parentTaskId, taskPosition);
+
+        _context.Subtasks.Add(subtask);
+        await _context.SaveChangesAsync();
+
+        return subtask;
     }
 
     public async Task CompleteTask(uint userId, uint taskId)
@@ -152,6 +173,21 @@ public class TasksService : ITasksService
         }
 
         task.SetDueDate(dueDate);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task AddTaskReminder(uint userId, uint taskId, int? beforeInMinutes)
+    {
+        var taskExists = await _context.Tasks.AnyAsync(t => t.UserId == userId && t.Id == taskId);
+        if (!taskExists)
+        {
+            throw new DomainException("Task not found.", 404);
+        }
+
+        var reminder = new Reminder(taskId, beforeInMinutes);
+
+        await _context.Reminders.AddAsync(reminder);
 
         await _context.SaveChangesAsync();
     }
