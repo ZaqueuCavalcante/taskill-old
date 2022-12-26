@@ -13,6 +13,9 @@ public class TaskillersController : ControllerBase
         _authService = authService;
     }
 
+    /// <summary>
+    /// Creates a new taskiller.
+    /// </summary>
     [HttpPost("")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> CreateTaskiller([FromBody] TaskillerIn data)
@@ -22,6 +25,9 @@ public class TaskillersController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Do login into app.
+    /// </summary>
     [HttpPost("login")]
     [ProducesResponseType(typeof(AccessTokenOut), 200)]
     public async Task<IActionResult> Login([FromBody] LoginIn data)
@@ -31,6 +37,9 @@ public class TaskillersController : ControllerBase
         return Ok(tokens);
     }
 
+    /// <summary>
+    /// Sets a taskiller to a premium plan.
+    /// </summary>
     [HttpPut("premium")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> AddTaskillerToPremiumPlan([FromBody] PremiumPlanIn data)

@@ -17,6 +17,9 @@ public class TasksController : ControllerBase
         _tasksService = tasksService;
     }
 
+    /// <summary>
+    /// Creates a new task.
+    /// </summary>
     [HttpPost("")]
     [ProducesResponseType(typeof(TaskOut), 200)]
     public async Task<IActionResult> CreateTask([FromBody] TaskIn data)
@@ -26,6 +29,9 @@ public class TasksController : ControllerBase
         return Ok(new TaskOut(task));
     }
 
+    /// <summary>
+    /// Creates a new sub-task.
+    /// </summary>
     [HttpPost("sub")]
     [ProducesResponseType(typeof(TaskOut), 200)]
     public async Task<IActionResult> CreateSubtask([FromBody] SubtaskIn data)
@@ -35,6 +41,9 @@ public class TasksController : ControllerBase
         return Ok(new TaskOut(task));
     }
 
+    /// <summary>
+    /// Completes a task.
+    /// </summary>
     [HttpPut("{id}/complete")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> CompleteTask([FromRoute] uint id)
@@ -44,6 +53,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Uncompletes a task.
+    /// </summary>
     [HttpPut("{id}/uncomplete")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> UncompleteTask([FromRoute] uint id)
@@ -53,6 +65,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task priority.
+    /// </summary>
     [HttpPut("{id}/priority/{newPriority}")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskPriority([FromRoute] uint id, [FromRoute] byte newPriority)
@@ -62,6 +77,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task title.
+    /// </summary>
     [HttpPut("{id}/title")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskTitle([FromRoute] uint id, [FromBody] TaskTitleIn data)
@@ -71,6 +89,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task description.
+    /// </summary>
     [HttpPut("{id}/description")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskDescription([FromRoute] uint id, [FromBody] TaskDescriptionIn data)
@@ -80,6 +101,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task project.
+    /// </summary>
     [HttpPut("{id}/project/{newProjectId}")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskProject([FromRoute] uint id, [FromRoute] uint newProjectId)
@@ -89,6 +113,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task labels.
+    /// </summary>
     [HttpPut("{id}/labels")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskLabels([FromRoute] uint id, [FromBody] TaskLabelsIn data)
@@ -98,6 +125,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Changes a task due date.
+    /// </summary>
     [HttpPut("{id}/due-date")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeTaskDueDate([FromRoute] uint id, [FromBody] TaskDueDateIn data)
@@ -107,6 +137,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Adds a reminder to a task. Available only for premium users. 
+    /// </summary>
     [HttpPut("{id}/reminder")]
     [Authorize(Roles = PremiumRole)]
     [ProducesResponseType(204)]
@@ -117,6 +150,9 @@ public class TasksController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Gets a task.
+    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(TaskOut), 200)]
     public async Task<IActionResult> GetTask([FromRoute] uint id)
@@ -126,6 +162,9 @@ public class TasksController : ControllerBase
         return Ok(new TaskOut(task));
     }
 
+    /// <summary>
+    /// Gets many tasks.
+    /// </summary>
     [HttpGet("")]
     [ProducesResponseType(typeof(List<TasksOut>), 200)]
     public async Task<IActionResult> GetTasks()
@@ -135,6 +174,9 @@ public class TasksController : ControllerBase
         return Ok(tasks.ConvertAll(t => new TasksOut(t)));
     }
 
+    /// <summary>
+    /// Search for a task by title or description.
+    /// </summary>
     [HttpGet("search/{text}")]
     [ProducesResponseType(typeof(List<TasksOut>), 200)]
     public async Task<IActionResult> SearchTasks([FromRoute] string text)

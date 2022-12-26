@@ -44,7 +44,7 @@ Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e aju
 
 - Sub-tasks to tasks
 - Project views (list / board) and sections
-- Reminders para alertar vencimento do prazo de entrega (Hangfire?) (Premium Users?) (WebSocket?)
+- Reminders para alertar vencimento do prazo de entrega
 - Adicionar eventos / histórico de atividades (Activity Log)
 - Relatórios de produtividade
 - Usar o Bogus para gerar dados nos testes

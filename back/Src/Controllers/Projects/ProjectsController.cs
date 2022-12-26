@@ -17,6 +17,9 @@ public class ProjectsController : ControllerBase
         _projectsService = projectsService;
     }
 
+    /// <summary>
+    /// Creates a new project.
+    /// </summary>
     [HttpPost("")]
     [ProducesResponseType(typeof(ProjectOut), 200)]
     public async Task<IActionResult> CreateProject([FromBody] ProjectIn data)
@@ -26,6 +29,9 @@ public class ProjectsController : ControllerBase
         return Ok(new ProjectOut(project));
     }
 
+    /// <summary>
+    /// Rename a project.
+    /// </summary>
     [HttpPut("{id}")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> RenameProject([FromRoute] uint id, [FromBody] ProjectIn data)
@@ -35,6 +41,9 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Change the index of a task in a project.
+    /// </summary>
     [HttpPut("{id}/tasks/{oldIndex}/move-to/{newIndex}")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> ChangeProjectTaskIndex([FromRoute] uint id, [FromRoute] int oldIndex, [FromRoute] int newIndex)
@@ -44,6 +53,9 @@ public class ProjectsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Gets a project.
+    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ProjectOut), 200)]
     public async Task<IActionResult> GetProject([FromRoute] uint id)
@@ -53,6 +65,9 @@ public class ProjectsController : ControllerBase
         return Ok(new ProjectOut(project));
     }
 
+    /// <summary>
+    /// Gets many projects.
+    /// </summary>
     [HttpGet("")]
     [ProducesResponseType(typeof(List<ProjectOut>), 200)]
     public async Task<IActionResult> GetProjects()

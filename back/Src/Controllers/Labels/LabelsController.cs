@@ -17,6 +17,9 @@ public class LabelsController : ControllerBase
         _labelsService = labelsService;
     }
 
+    /// <summary>
+    /// Creates a new label.
+    /// </summary>
     [HttpPost("")]
     [ProducesResponseType(typeof(LabelOut), 200)]
     public async Task<IActionResult> CreateLabel([FromBody] LabelIn data)
@@ -26,6 +29,9 @@ public class LabelsController : ControllerBase
         return Ok(new LabelOut(label));
     }
 
+    /// <summary>
+    /// Rename a label.
+    /// </summary>
     [HttpPut("{id}")]
     [ProducesResponseType(204)]
     public async Task<IActionResult> RenameLabel([FromRoute] uint id, [FromBody] LabelIn data)
@@ -35,6 +41,9 @@ public class LabelsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Gets a label.
+    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ProjectOut), 200)]
     public async Task<IActionResult> GetLabel([FromRoute] uint id)
@@ -44,6 +53,9 @@ public class LabelsController : ControllerBase
         return Ok(new LabelOut(label));
     }
 
+    /// <summary>
+    /// Gets many labels.
+    /// </summary>
     [HttpGet("")]
     [ProducesResponseType(typeof(List<LabelOut>), 200)]
     public async Task<IActionResult> GetLabels()
