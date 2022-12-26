@@ -2,7 +2,7 @@
 
 A simple TODO app, made with ASP.NET, PostgreSQL and React.
 
-Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e ajudar quem tá começando na área de desenvolvimento.
+Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, consolidar meus conhecimentos e servir de portfólio.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
