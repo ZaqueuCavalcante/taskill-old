@@ -38,7 +38,7 @@ public class TaskillersController : ControllerBase
     }
 
     /// <summary>
-    /// Sets a taskiller to a premium plan.
+    /// Adds a taskiller to premium plan.
     /// </summary>
     [HttpPut("premium")]
     [ProducesResponseType(204)]

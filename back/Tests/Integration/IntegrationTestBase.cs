@@ -37,6 +37,12 @@ public class ApiTestBase
         }
     }
 
+    protected T GetService<T>() where T : notnull
+    {
+        using var scope = _factory.Services.CreateScope();
+        return scope.ServiceProvider.GetRequiredService<T>();
+    }
+
     protected async Task CreateTaskiller(
         string email = "task@killer.com",
         string password = "rE9gt@4erg"
@@ -48,7 +54,7 @@ public class ApiTestBase
         response.StatusCode.Should().Be(HttpStatusCode.NoContent);
     }
 
-    protected async Task Login(
+    protected async Task<string> Login(
         string email = "task@killer.com",
         string password = "rE9gt@4erg"
     ) {
@@ -66,6 +72,8 @@ public class ApiTestBase
 
         _client.DefaultRequestHeaders.Remove("Authorization");
         _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {tokens.access_token}");
+
+        return tokens.access_token;
     }
 
     protected async Task<uint> CreateTask(string title = "Finish this project")

@@ -4,6 +4,9 @@ using NUnit.Framework;
 using Taskill.Controllers;
 using Task = System.Threading.Tasks.Task;
 using static Taskill.Extensions.ProjectExtensions;
+using System.IdentityModel.Tokens.Jwt;
+using static Taskill.Configs.AuthorizationConfigs;
+using Taskill.Settings;
 
 namespace Taskill.Tests.Integration;
 
@@ -11,7 +14,7 @@ namespace Taskill.Tests.Integration;
 public class TaskillersIntegrationTests : ApiTestBase
 {
     [Test]
-    public async Task On_taskiller_creation__should_link_a_default_project()
+    public async Task On_taskiller_creation__should_link_to_her_a_default_project()
     {
         // Arrange
         const string email = "taskiller@gmail.com";
@@ -28,6 +31,25 @@ public class TaskillersIntegrationTests : ApiTestBase
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         projects.Count.Should().Be(1);
         projects[0].name.Should().Be(DefaultProjectName);
+    }
+
+    [Test]
+    public async Task On_taskiller_creation__should_link_to_her_a_taskiller_role()
+    {
+        // Arrange
+        const string email = "taskiller@gmail.com";
+        const string password = "Test@123";
+
+        // Act
+        await CreateTaskiller(email, password);
+        var jwt = await Login(email, password);
+
+        // Assert
+        var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+
+        var role = token.Claims.First(c => c.Type == "role");
+
+        role.Value.Should().Be(TaskillerRole);
     }
 
     [Test]
@@ -74,5 +96,56 @@ public class TaskillersIntegrationTests : ApiTestBase
         var error = await response.DeserializeTo<ErrorDto>();
 
         error.error.Should().Be("Task not found.");
+    }
+
+    [Test]
+    public async Task Should_adds_taskiller_to_premium_plan__when_the_premium_token_is_correct()
+    {
+        // Arrange
+        const string email = "taskiller@gmail.com";
+        const string password = "Test@123";
+
+        await CreateTaskiller(email, password);
+        await Login(email, password);
+        var authSettings = GetService<AuthSettings>();
+
+        var data = new PremiumPlanIn { id = 1, token = authSettings.PremiumToken, };
+
+        // Act
+        var response = await _client.PutAsync("/taskillers/premium", data.ToStringContent());
+
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+
+        var jwt = await Login(email, password);
+
+        // Assert
+        var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+
+        var roles = token.Claims.Where(c => c.Type == "role").ToList();
+
+        roles.Count.Should().Be(2);
+
+        roles.Should().Contain(r => r.Value == PremiumRole);
+    }
+
+    [Test]
+    public async Task Should_not_adds_taskiller_to_premium_plan__when_the_premium_token_is_incorrect()
+    {
+        // Arrange
+        const string email = "taskiller@gmail.com";
+        const string password = "Test@123";
+
+        await CreateTaskiller(email, password);
+        await Login(email, password);
+
+        var data = new PremiumPlanIn { id = 1, token = "incorrect_token_lalala", };
+
+        // Act
+        var response = await _client.PutAsync("/taskillers/premium", data.ToStringContent());
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        var error = await response.DeserializeTo<ErrorDto>();
+        error.error.Should().Be("Invalid token.");
     }
 }
