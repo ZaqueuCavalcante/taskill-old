@@ -32,9 +32,13 @@ public class TasksService : ITasksService
                 .Select(p => p.Id).FirstAsync();
         }
 
-        var taskPosition = await _context.Tasks.CountAsync(t => t.ProjectId == projectId);
+        var sectionExists = await _context.Sections.AnyAsync(s => s.ProjectId == projectId && s.Id == data.sectionId);
+        var sectionId = sectionExists ? data.sectionId : null;
 
-        var task = new Domain.Task(userId, projectId, data.title, data.description, data.priority, taskPosition);
+        var taskPosition = sectionExists ?
+            await _context.Sections.CountAsync(s => s.Id == sectionId) : await _context.Tasks.CountAsync(t => t.ProjectId == projectId);
+
+        var task = new Domain.Task(userId, projectId, sectionId, data.title, data.description, data.priority, taskPosition);
 
         _context.Add(task);
         await _context.SaveChangesAsync();

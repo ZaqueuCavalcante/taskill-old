@@ -76,11 +76,25 @@ public class ApiTestBase
         return tokens.access_token;
     }
 
-    protected async Task<uint> CreateTask(string title = "Finish this project")
+    protected async Task CreateProject(string name = "Taskill")
     {
+        var data = new ProjectIn { name = name };
+
+        var response = await _client.PostAsync("/projects", data.ToStringContent());
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    protected async Task<uint> CreateTask(
+        string title = "Finish this project",
+        uint? projectId = null,
+        uint? sectionId = null
+    ) {
         var data = new TaskIn
         {
             title = title,
+            projectId = projectId,
+            sectionId = sectionId,
         };
 
         var response = await _client.PostAsync("/tasks", data.ToStringContent());

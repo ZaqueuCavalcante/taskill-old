@@ -42,6 +42,18 @@ public class ProjectsController : ControllerBase
     }
 
     /// <summary>
+    /// Creates a new project section.
+    /// </summary>
+    [HttpPost("{id}/sections")]
+    [ProducesResponseType(typeof(ProjectSectionOut), 200)]
+    public async Task<IActionResult> CreateProjectSection([FromRoute] uint id, [FromBody] ProjectSectionIn data)
+    {
+        var section = await _projectsService.CreateProjectSection(User.Id(), id, data.name);
+
+        return Ok(new ProjectSectionOut(section));
+    }
+
+    /// <summary>
     /// Change the index of a task in a project.
     /// </summary>
     [HttpPut("{id}/tasks/{oldIndex}/move-to/{newIndex}")]
@@ -49,6 +61,18 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> ChangeProjectTaskIndex([FromRoute] uint id, [FromRoute] int oldIndex, [FromRoute] int newIndex)
     {
         await _projectsService.ChangeProjectTaskIndex(User.Id(), id, oldIndex, newIndex);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Change the index of a task in a project section.
+    /// </summary>
+    [HttpPut("{id}/sections/{sectionId}/tasks/{oldIndex}/move-to/{newIndex}")]
+    [ProducesResponseType(204)]
+    public async Task<IActionResult> ChangeProjectSectionTaskIndex([FromRoute] uint id, [FromRoute] uint sectionId, [FromRoute] int oldIndex, [FromRoute] int newIndex)
+    {
+        await _projectsService.ChangeProjectSectionTaskIndex(User.Id(), id, sectionId, oldIndex, newIndex);
 
         return NoContent();
     }

@@ -8,28 +8,6 @@ Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e aju
 
 ## Backend
 
-### Features
-
-- Taskillers:
-  - Criar usuário
-  - Fazer login
-- Tasks:
-  - Criar uma task
-  - Adicionar sub-tasks a uma task
-  - Alterar uma task (título, descrição, prioridade, projeto, data de entrega, labels...)
-  - Marcar / desmarcar como concluída
-  - Visualizar uma ou várias
-  - Buscar tasks por palavra no título ou descrição
-  - Mudar a ordem delas dentro de um projeto
-- Projetos:
-  - Criar um projeto
-  - Alterar o nome
-  - Visualizar um ou vários
-- Labels:
-  - Criar uma label
-  - Alterar o nome
-  - Visualizar uma ou várias
-
 ### Conceitos e Tecnologias
 
 - ASP.NET para criação da API
@@ -40,13 +18,31 @@ Fiz esse projeto para servir de portifólio, consolidar meus conhecimentos e aju
 - Conceitos de DDD para modelagem do domínio
 - NUnit + FluentAssertions para testes automatizados
 
-### Future Features
+### Funcionalidades
 
-- Sub-tasks to tasks
-- Project views (list / board) and sections
-- Reminders para alertar vencimento do prazo de entrega
-- Adicionar eventos / histórico de atividades (Activity Log)
-- Relatórios de produtividade
+- Usuários:
+  - Criar um novo, fazer login, adicionar usuário ao plano Premium
+- Tasks:
+  - Criar uma task
+  - Adicionar sub-tasks a uma task
+  - Alterar uma task (título, descrição, prioridade, projeto, data de entrega, labels...)
+  - Marcar / desmarcar como concluída
+  - Adicionar um lembrete para ser avisado da data de entrega da task
+  - Visualizar uma ou várias
+  - Buscar tasks por palavra no título ou descrição
+- Projetos:
+  - Criar um projeto, alterar seu nome, visualizar um ou vários
+  - Criar uma ou mais seções dentro de um projeto
+  - Alterar o layout de visualização das seções dentro de um projeto
+  - Alterar a ordem de exibição das tasks dentro de um projeto ou seção
+  - Mover uma task de uma seção para outra
+- Labels:
+  - Criar uma label, alterar seu nome, visualizar uma ou várias
+
+### Backlog
+
+- Adicionar eventos / histórico de atividades
+- Relatórios de produtividade (Premium Plan)
 - Usar o Bogus para gerar dados nos testes
 - Testes de mutação
 - Login com OAuth 2.0, OpenID Connect

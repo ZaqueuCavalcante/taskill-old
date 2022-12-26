@@ -13,6 +13,7 @@ public class TasksUnitTests
         Action act = () => new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: priority
@@ -28,6 +29,7 @@ public class TasksUnitTests
         Action act = () => new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: priority
@@ -44,6 +46,7 @@ public class TasksUnitTests
         Action act = () => new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: title,
             description: "Now",
             priority: 0
@@ -59,6 +62,7 @@ public class TasksUnitTests
         Action act = () => new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: title,
             description: "Now",
             priority: 0
@@ -74,6 +78,7 @@ public class TasksUnitTests
         var task = new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: 3
@@ -92,6 +97,7 @@ public class TasksUnitTests
         var task = new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: 3
@@ -111,6 +117,7 @@ public class TasksUnitTests
         var task = new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: 0
@@ -127,6 +134,7 @@ public class TasksUnitTests
         var task = new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: 0
@@ -142,6 +150,7 @@ public class TasksUnitTests
         var task = new Domain.Task(
             userId: 1,
             projectId: 1,
+            sectionId: null,
             title: "Finish this project",
             description: "Now",
             priority: 0

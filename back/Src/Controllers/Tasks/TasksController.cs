@@ -138,7 +138,7 @@ public class TasksController : ControllerBase
     }
 
     /// <summary>
-    /// Adds a reminder to a task. Available only for premium users. 
+    /// Adds a reminder to a task. Available only for premium users.
     /// </summary>
     [HttpPut("{id}/reminder")]
     [Authorize(Roles = PremiumRole)]

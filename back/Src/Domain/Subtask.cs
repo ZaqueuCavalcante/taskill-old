@@ -4,7 +4,7 @@ public class Subtask : Task
 {
     public uint? ParentTaskId { get; set; }
 
-    public Subtask() {}
+    public Subtask() { }
 
     public Subtask(
         uint userId,
@@ -14,7 +14,7 @@ public class Subtask : Task
         byte priority,
         uint parentTaskId,
         int position = 0
-    ) : base(userId, projectId, title, description, priority, position)
+    ) : base(userId, projectId, null, title, description, priority, position)
     {
         ParentTaskId = parentTaskId;
     }

@@ -34,6 +34,7 @@ public class Task
     public Task(
         uint userId,
         uint projectId,
+        uint? sectionId,
         string title,
         string? description,
         byte priority,
@@ -41,6 +42,7 @@ public class Task
     ) {
         UserId = userId;
         SetProject(projectId);
+        SectionId = sectionId;
         SetTitle(title);
         SetDescription(description);
         SetPriority(priority);
