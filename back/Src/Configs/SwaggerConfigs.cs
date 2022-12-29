@@ -21,13 +21,13 @@ public static class SwaggerConfigs
                 License = new OpenApiLicense() { Name = "License", Url = new Uri("https://opensource.org/licenses/MIT") }
             });
 
-            options.AddSecurityDefinition(Scheme, new OpenApiSecurityScheme
+            options.AddSecurityDefinition(BearerScheme, new OpenApiSecurityScheme
             {
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
                 Description = "JWT authorization header using the bearer scheme.",
-                Scheme = Scheme,
+                Scheme = BearerScheme,
             });
 
             options.AddSecurityRequirement(new OpenApiSecurityRequirement()

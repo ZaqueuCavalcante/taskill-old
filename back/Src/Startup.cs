@@ -15,8 +15,8 @@ public class Startup
         services.AddEfCoreConfigs();
         services.AddIdentityConfigs();
 
-        services.AddAuthorizationConfigs();
         services.AddAuthenticationConfigs();
+        services.AddAuthorizationConfigs();
 
         services.AddSwaggerConfigs();
     }
