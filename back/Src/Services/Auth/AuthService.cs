@@ -45,8 +45,6 @@ public class AuthService : IAuthService
             throw new DomainException("Error on taskiller creation.");
         }
 
-        await _userManager.AddToRoleAsync(user, TaskillerRole);
-
         var project = new Project(user.Id, DefaultProjectName);
 
         _context.Add(project);
@@ -91,9 +89,10 @@ public class AuthService : IAuthService
             throw new DomainException("Taskiller not found.", 404);
         }
 
-        await _userManager.AddToRoleAsync(taskiller, PremiumRole);
+        var claims = await _userManager.GetClaimsAsync(taskiller);
+        if (claims.Any(c => c.Type == PremiumClaim)) return;
 
-        await _context.SaveChangesAsync();
+        await _userManager.AddClaimAsync(taskiller, new Claim(PremiumClaim, "true"));
     }
 
     private async Task<string> GenerateJwt(string email)
@@ -105,15 +104,10 @@ public class AuthService : IAuthService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString())
         };
+        var userClaims = await _userManager.GetClaimsAsync(user);
+        claims.AddRange(userClaims);
 
-        var roleNames = await _userManager.GetRolesAsync(user);
-        foreach (var role in roleNames)
-        {
-            claims.Add(new Claim("role", role));
-        }
-
-        var identityClaims = new ClaimsIdentity();
-        identityClaims.AddClaims(claims);
+        var identityClaims = new ClaimsIdentity(claims);
 
         var key = Encoding.ASCII.GetBytes(_authSettings.SecurityKey);
         var signingCredentials = new SigningCredentials(

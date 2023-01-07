@@ -7,7 +7,7 @@ using static Taskill.Configs.AuthorizationConfigs;
 namespace Taskill.Controllers;
 
 [ApiController, Route("[controller]")]
-[Authorize(Roles = TaskillerRole)]
+[Authorize]
 public class TasksController : ControllerBase
 {
     private readonly ITasksService _tasksService;
@@ -141,7 +141,7 @@ public class TasksController : ControllerBase
     /// Adds a reminder to a task. Available only for premium users.
     /// </summary>
     [HttpPut("{id}/reminder")]
-    [Authorize(Roles = PremiumRole)]
+    [Authorize(Policy = PremiumPolicy)]
     [ProducesResponseType(204)]
     public async Task<IActionResult> AddTaskReminder([FromRoute] uint id, [FromBody] TaskReminderIn data)
     {

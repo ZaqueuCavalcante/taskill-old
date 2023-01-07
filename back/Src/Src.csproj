@@ -5,13 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>RCS1102;CS8618;CS1591;IDE1006;RCS1169;IDE0044;RCS1194;</NoWarn>
+    <NoWarn>RCS1102;CS8618;CS1591;IDE1006;RCS1169;IDE0044;RCS1194;RCS1021;</NoWarn>
     <UserSecretsId>a02adbbd-9467-4b1f-bd18-65b24692c81c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />

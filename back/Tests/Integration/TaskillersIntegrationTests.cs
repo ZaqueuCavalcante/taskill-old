@@ -34,25 +34,6 @@ public class TaskillersIntegrationTests : ApiTestBase
     }
 
     [Test]
-    public async Task On_taskiller_creation__should_link_to_her_a_taskiller_role()
-    {
-        // Arrange
-        const string email = "taskiller@gmail.com";
-        const string password = "Test@123";
-
-        // Act
-        await CreateTaskiller(email, password);
-        var jwt = await Login(email, password);
-
-        // Assert
-        var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
-
-        var role = token.Claims.First(c => c.Type == "role");
-
-        role.Value.Should().Be(TaskillerRole);
-    }
-
-    [Test]
     public async Task On_taskiller_creation__should_throw_error_when_email_is_duplicated()
     {
         // Arrange
@@ -109,7 +90,7 @@ public class TaskillersIntegrationTests : ApiTestBase
         await Login(email, password);
         var authSettings = GetService<AuthSettings>();
 
-        var data = new PremiumPlanIn { id = 1, token = authSettings.PremiumToken, };
+        var data = new PremiumPlanIn { taskillerId = 1, token = authSettings.PremiumToken, };
 
         // Act
         var response = await _client.PutAsync("/taskillers/premium", data.ToStringContent());
@@ -121,11 +102,9 @@ public class TaskillersIntegrationTests : ApiTestBase
         // Assert
         var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
 
-        var roles = token.Claims.Where(c => c.Type == "role").ToList();
+        var premiumClaim = token.Claims.First(c => c.Type == PremiumClaim);
 
-        roles.Count.Should().Be(2);
-
-        roles.Should().Contain(r => r.Value == PremiumRole);
+        premiumClaim.Value.Should().Be("true");
     }
 
     [Test]
@@ -138,7 +117,7 @@ public class TaskillersIntegrationTests : ApiTestBase
         await CreateTaskiller(email, password);
         await Login(email, password);
 
-        var data = new PremiumPlanIn { id = 1, token = "incorrect_token_lalala", };
+        var data = new PremiumPlanIn { taskillerId = 1, token = "incorrect_token_lalala", };
 
         // Act
         var response = await _client.PutAsync("/taskillers/premium", data.ToStringContent());

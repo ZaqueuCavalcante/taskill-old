@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Taskill.Settings;
 
@@ -9,16 +8,14 @@ namespace Taskill.Configs;
 public static class AuthenticationConfigs
 {
     public const string BearerScheme = "Bearer";
-    public const string GoogleScheme = "Google";
 
     public static void AddAuthenticationConfigs(this IServiceCollection services)
     {
-        var authSettings = services.BuildServiceProvider().GetService<AuthSettings>()!;
-        var googleSettings = services.BuildServiceProvider().GetService<GoogleSettings>()!;
+        var serviceProvider = services.BuildServiceProvider();
+        var authSettings = serviceProvider.GetService<AuthSettings>()!;
 
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
         JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -29,6 +26,8 @@ public static class AuthenticationConfigs
                 Encoding.ASCII.GetBytes(authSettings.SecurityKey)
             ),
 
+            ValidAlgorithms = new List<string> { "HS256" },
+
             ValidateAudience = true,
             ValidAudience = authSettings.Audience,
 
@@ -36,25 +35,16 @@ public static class AuthenticationConfigs
             ClockSkew = TimeSpan.Zero,
 
             NameClaimType = "sub",
-            RoleClaimType = "role",
         };
 
         services.AddAuthentication(options =>
         {
-            options.DefaultAuthenticateScheme = BearerScheme;
             options.DefaultScheme = BearerScheme;
-            options.DefaultChallengeScheme = BearerScheme;
+            options.DefaultAuthenticateScheme = BearerScheme;
         })
         .AddJwtBearer(BearerScheme, options =>
         {
-            options.SaveToken = true;
             options.TokenValidationParameters = tokenValidationParameters;
-        })
-        .AddGoogle(GoogleScheme, options =>
-        {
-            options.ClientId = googleSettings.ClientId;
-            options.ClientSecret = googleSettings.ClientSecret;
-            options.SignInScheme = IdentityConstants.ExternalScheme;
         });
     }
 }

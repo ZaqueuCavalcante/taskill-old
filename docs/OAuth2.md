@@ -99,6 +99,11 @@ native application.
 - [Asp.Net Google Login](https://mahdikarimipour.com/blog/google-auth-for-react-with-aspnet-identity)
 - [OAuth Playground](https://www.oauth.com/playground)
 - [ASP.NET Core Identity Series – OAuth 2.0, OpenID Connect & IdentityServer](https://chsakell.com/2019/03/11/asp-net-core-identity-series-oauth-2-0-openid-connect-identityserver/)
+- [An Illustrated Guide to OAuth and OpenID Connect](https://youtu.be/t18YB3xDfXI)
+
+https://ml-software.ch/posts/switching-google-authentication-to-oidc-in-asp-net-core-2-2
+https://andrewlock.net/an-introduction-to-openid-connect-in-asp-net-core/
+
 ## Topics
 
 - Auth0

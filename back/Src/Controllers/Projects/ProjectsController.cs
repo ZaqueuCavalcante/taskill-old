@@ -2,12 +2,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskill.Extensions;
 using Taskill.Services;
-using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
 
 [ApiController, Route("[controller]")]
-[Authorize(Roles = TaskillerRole)]
+[Authorize]
 public class ProjectsController : ControllerBase
 {
     private readonly IProjectsService _projectsService;

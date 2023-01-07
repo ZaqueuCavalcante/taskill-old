@@ -26,7 +26,7 @@ public static class SwaggerConfigs
                 Name = "Authorization",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.ApiKey,
-                Description = "JWT authorization header using the bearer scheme.",
+                Description = "JWT authorization header using the Bearer scheme.",
                 Scheme = BearerScheme,
             });
 
