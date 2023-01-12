@@ -34,6 +34,9 @@ public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>,
 
         builder.HasDefaultSchema("taskill");
 
+        builder.Entity<Taskiller>().ToTable("taskillers");
+        builder.Entity<IdentityUserClaim<uint>>().ToTable("claims");
+
         builder.ChangeIdentityTablesToSnakeCase();
 
         builder.ApplyConfigurationsFromAssembly(GetType().Assembly);

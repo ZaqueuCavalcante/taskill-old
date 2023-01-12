@@ -2,11 +2,11 @@ using System.Net;
 using FluentAssertions;
 using NUnit.Framework;
 using Taskill.Controllers;
+using System.IdentityModel.Tokens.Jwt;
+using Taskill.Settings;
 using Task = System.Threading.Tasks.Task;
 using static Taskill.Extensions.ProjectExtensions;
-using System.IdentityModel.Tokens.Jwt;
 using static Taskill.Configs.AuthorizationConfigs;
-using Taskill.Settings;
 
 namespace Taskill.Tests.Integration;
 

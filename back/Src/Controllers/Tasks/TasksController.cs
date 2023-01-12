@@ -6,8 +6,8 @@ using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
 
-[ApiController, Route("[controller]")]
 [Authorize]
+[ApiController, Route("[controller]")]
 public class TasksController : ControllerBase
 {
     private readonly ITasksService _tasksService;

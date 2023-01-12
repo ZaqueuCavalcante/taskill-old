@@ -5,8 +5,8 @@ using Taskill.Services;
 
 namespace Taskill.Controllers;
 
-[ApiController, Route("[controller]")]
 [Authorize]
+[ApiController, Route("[controller]")]
 public class ProjectsController : ControllerBase
 {
     private readonly IProjectsService _projectsService;

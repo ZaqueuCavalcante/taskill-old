@@ -6,5 +6,5 @@ public class AccessTokenOut
 
     public int expires_in { get; set; }
 
-    public string token_type { get; set; }
+    public string token_type { get; set; } = "Bearer";
 }

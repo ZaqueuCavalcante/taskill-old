@@ -33,13 +33,10 @@ public static class AuthenticationConfigs
 
             ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
-
-            NameClaimType = "sub",
         };
 
         services.AddAuthentication(options =>
         {
-            options.DefaultScheme = BearerScheme;
             options.DefaultAuthenticateScheme = BearerScheme;
         })
         .AddJwtBearer(BearerScheme, options =>

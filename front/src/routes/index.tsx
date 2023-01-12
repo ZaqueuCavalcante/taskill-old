@@ -8,10 +8,10 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route
-        path="tasks"
+        path="/"
         element={
           <Button variant="contained" color="primary" onClick={toggleTheme}>
-            Change Theme
+            Change Theme Lalala
           </Button>
         }
       />

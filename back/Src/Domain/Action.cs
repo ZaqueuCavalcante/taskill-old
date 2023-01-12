@@ -8,7 +8,7 @@ public class Action
 
     public ActionType Type { get; set; }
 
-    public DateTime CreationDate { get; set; }
+    public DateTime Date { get; set; }
 
     public uint? ProjectId { get; set; }
 

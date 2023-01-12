@@ -7,8 +7,9 @@ export const App = () => {
   return (
     <AppThemeProvider>
       <BrowserRouter>
-        <LateralMenu></LateralMenu>
-        <AppRoutes />
+        <LateralMenu>
+          <AppRoutes />
+        </LateralMenu>
       </BrowserRouter>
     </AppThemeProvider>
   );

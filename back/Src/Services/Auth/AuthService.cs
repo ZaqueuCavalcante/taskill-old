@@ -9,9 +9,9 @@ using Taskill.Database;
 using Taskill.Domain;
 using Taskill.Exceptions;
 using Taskill.Settings;
+using Task = System.Threading.Tasks.Task;
 using static Taskill.Configs.AuthorizationConfigs;
 using static Taskill.Extensions.ProjectExtensions;
-using Task = System.Threading.Tasks.Task;
 
 namespace Taskill.Services;
 
@@ -57,7 +57,7 @@ public class AuthService : IAuthService
             userName: email,
             password: password,
             isPersistent: false,
-            lockoutOnFailure: true
+            lockoutOnFailure: false
         );
 
         if (!result.Succeeded)
@@ -71,7 +71,6 @@ public class AuthService : IAuthService
         {
             access_token = accessToken,
             expires_in = _authSettings.JwtExpirationTimeInMinutes,
-            token_type = "Bearer",
         };
     }
 
