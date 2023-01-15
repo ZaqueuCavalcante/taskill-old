@@ -29,6 +29,8 @@ public class Task
 
     public List<Label> Labels { get; set; }
 
+    public List<Subtask> Subtasks { get; set; }
+
     public Task() { }
 
     public Task(
@@ -38,7 +40,7 @@ public class Task
         string title,
         string? description,
         byte priority,
-        int position = 0
+        int index = 0
     ) {
         UserId = userId;
         SetProject(projectId);
@@ -46,7 +48,7 @@ public class Task
         SetTitle(title);
         SetDescription(description);
         SetPriority(priority);
-        SetIndex(position);
+        SetIndex(index);
         CreationDate = DateTime.UtcNow;
     }
 

@@ -8,10 +8,17 @@ public class SubtaskConfig : IEntityTypeConfiguration<Subtask>
 {
     public void Configure(EntityTypeBuilder<Subtask> subtask)
     {
-        subtask.ToTable("tasks");
+        subtask.ToTable("subtasks");
+
+        subtask.HasKey(s => s.Id);
+        subtask.Property(s => s.Id).ValueGeneratedOnAdd();
+
+        subtask.Property(s => s.TaskId).IsRequired();
+
+        subtask.Property(s => s.Title).IsRequired();
 
         subtask.HasOne<Domain.Task>()
-            .WithMany()
-            .HasForeignKey(s => s.ParentTaskId);
+            .WithMany(t => t.Subtasks)
+            .HasForeignKey(s => s.TaskId);
     }
 }

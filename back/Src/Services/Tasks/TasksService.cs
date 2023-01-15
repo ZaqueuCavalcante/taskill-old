@@ -35,10 +35,10 @@ public class TasksService : ITasksService
         var sectionExists = await _context.Sections.AnyAsync(s => s.ProjectId == projectId && s.Id == data.sectionId);
         var sectionId = sectionExists ? data.sectionId : null;
 
-        var taskPosition = sectionExists ?
+        var taskIndex = sectionExists ?
             await _context.Sections.CountAsync(s => s.Id == sectionId) : await _context.Tasks.CountAsync(t => t.ProjectId == projectId);
 
-        var task = new Domain.Task(userId, projectId, sectionId, data.title, data.description, data.priority, taskPosition);
+        var task = new Domain.Task(userId, projectId, sectionId, data.title, data.description, data.priority, taskIndex);
 
         _context.Add(task);
         await _context.SaveChangesAsync();
@@ -49,15 +49,15 @@ public class TasksService : ITasksService
     public async Task<Subtask> CreateSubtask(uint userId, SubtaskIn data)
     {
         var task = await _context.Tasks.AsNoTracking()
-            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == data.parentTaskId);
+            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == data.taskId);
         if (task == null)
         {
             throw new DomainException("Task not found.", 404);
         }
 
-        var taskPosition = await _context.Subtasks.CountAsync(s => s.ParentTaskId == data.parentTaskId);
+        var subtaskIndex = await _context.Subtasks.CountAsync(s => s.TaskId == data.taskId);
 
-        var subtask = new Subtask(userId, task.ProjectId, data.title, data.description, data.priority, data.parentTaskId, taskPosition);
+        var subtask = new Subtask(data.taskId, data.title, data.description, subtaskIndex);
 
         _context.Subtasks.Add(subtask);
         await _context.SaveChangesAsync();
@@ -198,8 +198,7 @@ public class TasksService : ITasksService
 
     public async Task<Domain.Task> GetTask(uint userId, uint taskId)
     {
-        var task = await _context.Tasks
-            .AsNoTracking()
+        var task = await _context.Tasks.AsNoTracking()
             .Include(t => t.Labels)
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
@@ -208,13 +207,16 @@ public class TasksService : ITasksService
             throw new DomainException("Task not found.", 404);
         }
 
+        task.Subtasks = await _context.Subtasks.AsNoTracking()
+            .Where(s => s.TaskId == taskId)
+            .ToListAsync();
+
         return task;
     }
 
     public async Task<List<Domain.Task>> GetTasks(uint userId)
     {
-        return await _context.Tasks
-            .AsNoTracking()
+        return await _context.Tasks.AsNoTracking()
             .Where(t => t.UserId == userId)
             .OrderByDescending(t => t.CreationDate)
             .ToListAsync();

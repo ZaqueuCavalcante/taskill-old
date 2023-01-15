@@ -38,7 +38,7 @@ public class TasksController : ControllerBase
     {
         var task = await _tasksService.CreateSubtask(User.Id(), data);
 
-        return Ok(new TaskOut(task));
+        return Ok(new SubtaskOut(task));
     }
 
     /// <summary>

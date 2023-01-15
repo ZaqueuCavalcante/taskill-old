@@ -22,6 +22,8 @@ public class TaskOut
 
     public List<TaskLabelOut> labels { get; set; }
 
+    public List<SubtaskOut> subtasks { get; set; }
+
     public TaskOut() { }
 
     public TaskOut(Domain.Task task)
@@ -36,5 +38,6 @@ public class TaskOut
         completionDate = task.CompletionDate;
         index = task.Index;
         labels = task.Labels?.ConvertAll(l => new TaskLabelOut(l)) ?? new();
+        subtasks = task.Subtasks?.ConvertAll(s => new SubtaskOut(s)) ?? new();
     }
 }
