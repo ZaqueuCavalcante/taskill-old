@@ -57,7 +57,7 @@ public class TasksService : ITasksService
 
         var subtaskIndex = await _context.Subtasks.CountAsync(s => s.TaskId == data.taskId);
 
-        var subtask = new Subtask(data.taskId, data.title, data.description, subtaskIndex);
+        var subtask = new Subtask(data.taskId, data.title, subtaskIndex);
 
         _context.Subtasks.Add(subtask);
         await _context.SaveChangesAsync();

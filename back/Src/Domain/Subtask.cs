@@ -11,8 +11,6 @@ public class Subtask
 
     public string Title { get; set; }
 
-    public string? Description { get; set; }
-
     public DateTime CreationDate { get; set; }
 
     public DateTime? CompletionDate { get; set; }
@@ -24,12 +22,10 @@ public class Subtask
     public Subtask(
         uint taskId,
         string title,
-        string? description,
         int index = 0
     ) {
         TaskId = taskId;
         SetTitle(title);
-        SetDescription(description);
         SetIndex(index);
         CreationDate = DateTime.UtcNow;
     }
@@ -42,11 +38,6 @@ public class Subtask
         }
 
         Title = title;
-    }
-
-    public void SetDescription(string? description)
-    {
-        Description = description;
     }
 
     public void SetIndex(int index)

@@ -31,9 +31,9 @@ public static class IdentityConfigs
 
         services.Configure<IdentityOptions>(options =>
         {
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(24);  // The amount of time a user is locked out when a lockout occurs.
-            options.Lockout.MaxFailedAccessAttempts = 10;  // The number of failed access attempts until a user is locked out, if lockout is enabled.
             options.Lockout.AllowedForNewUsers = true;  // Determines if a new user can be locked out.
+            options.Lockout.MaxFailedAccessAttempts = 10;  // The number of failed access attempts until a user is locked out, if lockout is enabled.
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(24);  // The amount of time a user is locked out when a lockout occurs.
         });
     }
 }

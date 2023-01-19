@@ -24,7 +24,7 @@ public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>,
     {
         if (Env.IsDevelopment())
         {
-            optionsBuilder.EnableSensitiveDataLogging(true);
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 

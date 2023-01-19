@@ -4,7 +4,10 @@ A simple TODO app, made with ASP.NET, PostgreSQL and React.
 
 Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, consolidar meus conhecimentos e servir de portfólio.
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+---
+
+![Main Screen](/docs/main-screen.png)
+![Task View](/docs/task-view.png)
 
 ## Backend
 
@@ -48,8 +51,10 @@ Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, co
 - Login com OAuth 2.0, OpenID Connect
 - CI/CD pipeline no GitHub
 - Subir o projeto com Docker + Compose
+- 12 Factor App
+- Logs / errors / monitoring
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+---
 
 ## Frontend
 
