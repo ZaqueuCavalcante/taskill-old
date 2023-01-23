@@ -35,6 +35,12 @@ Como isso funciona?
 - Função mais básica do app
 - Possui algumas variações:
     - Apenas informando o Title
+    - Informando Title e Description
+    - Especificando um Project
+    - Especificando uma ou mais Tags
+    - Especificando a Priority
+    - Especificando uma DueDate
+    - Especificando um ou mais Reminders
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

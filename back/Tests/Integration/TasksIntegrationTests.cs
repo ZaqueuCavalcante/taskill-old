@@ -10,24 +10,88 @@ namespace Taskill.Tests.Integration;
 public class TasksIntegrationTests : ApiTestBase
 {
     [Test]
-    public async Task On_task_creation__when_the_project_is_not_defined__the_default_taskiller_project_should_be_used()
+    public async Task On_task_creation__when_only_the_title_is_defined__the_provided_title_should_be_used()
     {
         // Arrange
         await CreateTaskiller();
         await Login();
 
-        var taskIn = new TaskIn
-        {
-            title = "Finish this project",
-        };
+        var taskIn = new TaskIn { title = "Finish this project" };
 
         // Act
         var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
         var task = await response.DeserializeTo<TaskOut>();
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        task.title.Should().Be(taskIn.title);
+    }
+
+    [Test]
+    public async Task On_task_creation__when_only_the_title_is_defined__the_default_project_should_be_used()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+
+        var taskIn = new TaskIn { title = "Finish this project" };
+
+        // Act
+        var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
+        var task = await response.DeserializeTo<TaskOut>();
+
+        // Assert
         task.projectId.Should().Be(1);
+    }
+
+    [Test]
+    public async Task On_task_creation__when_only_the_title_is_defined__the_priority_should_be_0()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+
+        var taskIn = new TaskIn { title = "Finish this project" };
+
+        // Act
+        var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
+        var task = await response.DeserializeTo<TaskOut>();
+
+        // Assert
+        task.priority.Should().Be(0);
+    }
+
+    [Test]
+    public async Task On_task_creation__when_only_the_title_is_defined__the_description_should_be_null()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+
+        var taskIn = new TaskIn { title = "Finish this project" };
+
+        // Act
+        var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
+        var task = await response.DeserializeTo<TaskOut>();
+
+        // Assert
+        task.description.Should().BeNull();
+    }
+
+    [Test]
+    public async Task On_task_creation__when_only_the_title_is_defined__the_due_date_should_be_null()
+    {
+        // Arrange
+        await CreateTaskiller();
+        await Login();
+
+        var taskIn = new TaskIn { title = "Finish this project" };
+
+        // Act
+        var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
+        var task = await response.DeserializeTo<TaskOut>();
+
+        // Assert
+        task.dueDate.Should().BeNull();
     }
 
     [Test]
@@ -37,17 +101,13 @@ public class TasksIntegrationTests : ApiTestBase
         await CreateTaskiller();
         await Login();
 
-        var taskIn = new TaskIn
-        {
-            title = "Finish this project",
-        };
+        var taskIn = new TaskIn { title = "Finish this project" };
 
         // Act
         var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
         var task = await response.DeserializeTo<TaskOut>();
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
         task.priority.Should().Be(0);
     }
 

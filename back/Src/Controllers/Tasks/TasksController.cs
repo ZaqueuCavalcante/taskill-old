@@ -12,10 +12,8 @@ public class TasksController : ControllerBase
 {
     private readonly ITasksService _tasksService;
 
-    public TasksController(ITasksService tasksService)
-    {
+    public TasksController(ITasksService tasksService) =>
         _tasksService = tasksService;
-    }
 
     /// <summary>
     /// Creates a new task.
