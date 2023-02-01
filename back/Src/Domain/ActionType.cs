@@ -4,9 +4,5 @@ public enum ActionType
 {
     AddedTask = 0,
 
-    UpdatedTask = 1,
-
-    CompletedTask = 2,
-
-    UncompletedTask = 3,
+    CompletedTask = 1,
 }

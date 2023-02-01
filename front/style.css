@@ -1,0 +1,50 @@
+#navbar {
+  border-style: solid;
+  border-width: 2px;
+  margin-bottom: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#board {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.vertical-divider {
+  border-style: dashed;
+  border-width: 1px;
+  height: 500px;
+  margin: 10px;
+}
+
+#left-columns {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
+
+#middle-columns {
+  border-style: solid;
+  border-width: 2px;
+  padding: 30px;
+  display: flex;
+}
+
+#right-columns {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
+
+.card-task {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
