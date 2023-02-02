@@ -18,14 +18,16 @@
 .vertical-divider {
   border-style: dashed;
   border-width: 1px;
-  height: 500px;
+  height: 600px;
   margin: 10px;
 }
 
-#left-columns {
+#left-column {
   border-style: solid;
   border-width: 2px;
   padding: 10px;
+  background: #868686;
+  display: grid;
 }
 
 #middle-columns {
@@ -33,12 +35,47 @@
   border-width: 2px;
   padding: 30px;
   display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
-#right-columns {
+.section {
   border-style: solid;
   border-width: 2px;
   padding: 10px;
+  background: #caabab;
+}
+
+.mini-section {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+  background: #b6eda6;
+}
+
+.mini-section-title {
+  padding: 10px;
+  background: #b6eda6;
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mini-section-card {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+#right-column {
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+  background: #868686;
+  display: grid;
 }
 
 .card-task {
@@ -47,4 +84,14 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 5px;
+}
+
+#priority-high {
+  background: #ff0000;
+}
+#priority-medium {
+  background: #ffee00;
+}
+#priority-low {
+  background: #99ff00;
 }
