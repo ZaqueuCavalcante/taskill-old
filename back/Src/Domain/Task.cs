@@ -31,6 +31,8 @@ public class Task
 
     public List<Subtask> Subtasks { get; set; }
 
+    public List<Action> Actions { get; set; }
+
     public Task() { }
 
     public Task(
@@ -50,6 +52,8 @@ public class Task
         SetPriority(priority);
         SetIndex(index);
         CreationDate = DateTime.UtcNow;
+
+        Actions = new List<Action>{ new Action(userId, ActionType.AddedTask, Id) };
     }
 
     public void SetTitle(string title)
@@ -100,6 +104,7 @@ public class Task
     public void Complete()
     {
         CompletionDate = DateTime.Now;
+        Actions.Add(new Action(UserId, ActionType.CompletedTask, Id));
     }
 
     public void Uncomplete()

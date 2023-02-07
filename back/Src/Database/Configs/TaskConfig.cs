@@ -18,6 +18,10 @@ public class TaskConfig : IEntityTypeConfiguration<Domain.Task>
 
         task.Property(t => t.Title).IsRequired();
 
+        task.HasMany(t => t.Actions)
+            .WithOne()
+            .HasForeignKey(a => a.TaskId);
+
         task.HasMany(t => t.Labels)
             .WithMany(l => l.Tasks)
             .UsingEntity<Dictionary<string, object>>(

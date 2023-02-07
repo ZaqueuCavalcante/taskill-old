@@ -15,4 +15,17 @@ public class Action
     public uint? TaskId { get; set; }
 
     public uint? LabelId { get; set; }
+
+    public Action() { }
+
+    public Action(
+        uint userId,
+        ActionType type,
+        uint taskId
+    ) {
+        UserId = userId;
+        Type = type;
+        Date = DateTime.Now;
+        TaskId = taskId;
+    }
 }

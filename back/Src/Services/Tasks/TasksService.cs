@@ -67,7 +67,10 @@ public class TasksService : ITasksService
 
     public async Task CompleteTask(uint userId, uint taskId)
     {
-        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        var task = await _context.Tasks
+            .Include(t => t.Actions)
+            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
         if (task == null)
         {
             throw new DomainException("Task not found.", 404);
@@ -80,7 +83,10 @@ public class TasksService : ITasksService
 
     public async Task UncompleteTask(uint userId, uint taskId)
     {
-        var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+        var task = await _context.Tasks
+            .Include(t => t.Actions)
+            .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
+
         if (task == null)
         {
             throw new DomainException("Task not found.", 404);

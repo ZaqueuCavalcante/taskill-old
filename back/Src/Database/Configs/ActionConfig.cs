@@ -27,10 +27,6 @@ public class ActionConfig : IEntityTypeConfiguration<Action>
             .WithMany()
             .HasForeignKey(a => a.ProjectId);
 
-        action.HasOne<Task>()
-            .WithMany()
-            .HasForeignKey(a => a.TaskId);
-
         action.HasOne<Label>()
             .WithMany()
             .HasForeignKey(a => a.LabelId);
