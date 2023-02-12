@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+
+#task {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 25px;
+}
+
+#task__title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#task__description {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#task__subtasks {
+  margin-left: 10px;
+}
+
+#footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.footer__info {
+  padding: 5px 15px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  font-size: large;
+  font-weight: bold;
+}

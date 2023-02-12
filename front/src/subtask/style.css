@@ -1,0 +1,7 @@
+.subtask {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 5px;
+}

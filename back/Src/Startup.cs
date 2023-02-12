@@ -18,12 +18,19 @@ public class Startup
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
+        services.AddCors();
         services.AddSwaggerConfigs();
     }
 
     public static void Configure(IApplicationBuilder app)
     {
         app.SetupDatabase();
+
+        app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+        );
 
         app.UseRouting();
 
