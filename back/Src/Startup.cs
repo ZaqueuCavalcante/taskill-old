@@ -18,7 +18,7 @@ public class Startup
         services.AddAuthenticationConfigs();
         services.AddAuthorizationConfigs();
 
-        services.AddCors();
+        services.AddCorsConfigs();
         services.AddSwaggerConfigs();
     }
 
@@ -26,11 +26,7 @@ public class Startup
     {
         app.SetupDatabase();
 
-        app.UseCors(builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-        );
+        app.UseCors();
 
         app.UseRouting();
 

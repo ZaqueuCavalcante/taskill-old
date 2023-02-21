@@ -1,21 +1,10 @@
 import Subtask from "../subtask/Subtask";
-import API from "../API.js";
+import getTaskById from "../API.js";
 import "./style.css";
 
 const Task = () => {
   async function getTask() {
-    const URL = "http://localhost:5000";
-    const JWT =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3YjZkZjUwNC03NDc0LTQ5NmEtODY3Ni1jMmMzYzk0ODg2ZWMiLCJzdWIiOiIxIiwibmJmIjoxNjc2MjI0NDg4LCJleHAiOjE2NzYyMjgwODgsImlhdCI6MTY3NjIyNDQ4OCwiaXNzIjoidGFza2lsbC1hcGktZGV2ZWxvcG1lbnQiLCJhdWQiOiJ0YXNraWxsLWFwaS1kZXZlbG9wbWVudCJ9.JyotgqXtFztq0ljfMyR8m521fEHE8_IdIag1wD9F01c";
-    const AUTH_HEADER = {
-      headers: { Authentication: `Bearer ${JWT}` },
-    };
-
-    console.log(AUTH_HEADER);
-
-    var response = await fetch("http://localhost:5000/tasks/1", AUTH_HEADER);
-    console.log(response);
-    return await response.json();
+    return await getTaskById(1);
   }
 
   return (
