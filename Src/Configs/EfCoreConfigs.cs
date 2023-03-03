@@ -18,15 +18,4 @@ public static class EfCoreConfigs
             options.UseSnakeCaseNamingConvention();
         });
     }
-
-    public static void SetupDatabase(this IApplicationBuilder app)
-    {
-        if (Env.IsDevelopment())
-        {
-            using var scope = app.ApplicationServices.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<TaskillDbContext>();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
-        }
-    }
 }

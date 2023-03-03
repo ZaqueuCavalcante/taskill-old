@@ -20,12 +20,12 @@ public class Startup
 
         services.AddCorsConfigs();
         services.AddSwaggerConfigs();
+
+        services.AddHealthChecks();
     }
 
     public static void Configure(IApplicationBuilder app)
     {
-        app.SetupDatabase();
-
         app.UseCors();
 
         app.UseRouting();
@@ -38,5 +38,7 @@ public class Startup
         app.UseSwaggerThings();
 
         app.UseEndpointsThings();
+
+        app.UseHealthChecks("/health");
     }
 }
