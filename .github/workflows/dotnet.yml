@@ -2,7 +2,7 @@ name: DotNet Build and Tests
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
