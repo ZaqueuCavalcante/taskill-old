@@ -11,6 +11,6 @@ public class LoginIn
     /// <summary>
     /// The user password.
     /// </summary>
-    /// <example>Fad03Ec8394f99</example>
+    /// <example>F@d03Ec8394f99</example>
     public string password { get; set; }
 }

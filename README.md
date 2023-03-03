@@ -8,6 +8,7 @@ Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, co
 
 ![Main Screen](/docs/main-screen.png)
 ![Task View](/docs/task-view.png)
+![Database Tables](/docs/taskill-db-diagram.png)
 
 ## Backend
 
