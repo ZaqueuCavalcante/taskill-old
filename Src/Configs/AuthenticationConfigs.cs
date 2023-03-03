@@ -37,6 +37,8 @@ public static class AuthenticationConfigs
 
         services.AddAuthentication(options =>
         {
+            options.DefaultScheme = BearerScheme;
+            options.DefaultChallengeScheme = BearerScheme;
             options.DefaultAuthenticateScheme = BearerScheme;
         })
         .AddJwtBearer(BearerScheme, options =>

@@ -1,6 +1,6 @@
 # Taskill
 
-A simple TODO app, made with ASP.NET, PostgreSQL and React.
+Um simples TODO app, feito com ASP.NET e PostgreSQL.
 
 Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, consolidar meus conhecimentos e servir de portfólio.
 
