@@ -51,7 +51,7 @@ public class TaskillersIntegrationTests : ApiTestBase
 
         var error = await response.DeserializeTo<ErrorDto>();
 
-        error.error.Should().Be("Error on taskiller creation.");
+        error.error.Should().Be("Email already used.");
     }
 
     [Test]

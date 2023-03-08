@@ -36,13 +36,17 @@ public class AuthService : IAuthService
 
     public async Task CreateTaskiller(string email, string password)
     {
+        var emailAlreadyUsed = await _context.Taskillers.AsNoTracking()
+            .AnyAsync(t => t.Email == email);
+        if (emailAlreadyUsed) throw new DomainException("Email already used.");
+
         var user = new Taskiller(email);
 
         var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
         {
-            throw new DomainException("Error on taskiller creation.");
+            throw new DomainException(result.Errors.FirstOrDefault()?.ToString() ?? "Error on taskiller creation.");
         }
 
         var project = new Project(user.Id, DefaultProjectName);
