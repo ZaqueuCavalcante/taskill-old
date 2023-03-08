@@ -68,7 +68,6 @@ public class TasksService : ITasksService
     public async Task CompleteTask(uint userId, uint taskId)
     {
         var task = await _context.Tasks
-            .Include(t => t.Actions)
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
@@ -84,7 +83,6 @@ public class TasksService : ITasksService
     public async Task UncompleteTask(uint userId, uint taskId)
     {
         var task = await _context.Tasks
-            .Include(t => t.Actions)
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
