@@ -136,19 +136,6 @@ public class TasksController : ControllerBase
     }
 
     /// <summary>
-    /// Adds a reminder to a task. Only available for premium users.
-    /// </summary>
-    [HttpPut("{id}/reminder")]
-    [Authorize(Policy = PremiumPolicy)]
-    [ProducesResponseType(204)]
-    public async Task<IActionResult> AddTaskReminder([FromRoute] uint id, [FromBody] TaskReminderIn data)
-    {
-        await _tasksService.AddTaskReminder(User.Id(), id, data.beforeInMinutes);
-
-        return NoContent();
-    }
-
-    /// <summary>
     /// Gets a task.
     /// </summary>
     [HttpGet("{id}")]

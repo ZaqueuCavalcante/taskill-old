@@ -36,16 +36,4 @@ public class TaskillersController : ControllerBase
 
         return Ok(tokens);
     }
-
-    /// <summary>
-    /// Adds a taskiller to premium plan.
-    /// </summary>
-    [HttpPut("premium")]
-    [ProducesResponseType(204)]
-    public async Task<IActionResult> AddTaskillerToPremiumPlan([FromBody] PremiumPlanIn data)
-    {
-        await _authService.AddTaskillerToPremiumPlan(data.taskillerId, data.token);
-
-        return NoContent();
-    }
 }

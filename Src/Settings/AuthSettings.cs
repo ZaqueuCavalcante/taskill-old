@@ -6,7 +6,6 @@ public class AuthSettings
     public string Audience { get; set; }
     public string SecurityKey { get; set; }
     public int JwtExpirationTimeInMinutes { get; set; }
-    public string PremiumToken { get; set; }
 
     public AuthSettings(IConfiguration configuration)
     {

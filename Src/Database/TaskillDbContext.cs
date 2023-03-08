@@ -14,7 +14,6 @@ public class TaskillDbContext : IdentityDbContext<Taskiller, IdentityRole<uint>,
     public DbSet<Project> Projects { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<Label> Labels { get; set; }
-    public DbSet<Reminder> Reminders { get; set; }
 
     public DbSet<Taskiller> Taskillers { get; set; }
 

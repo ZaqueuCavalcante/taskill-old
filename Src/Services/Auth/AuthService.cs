@@ -74,26 +74,6 @@ public class AuthService : IAuthService
         };
     }
 
-    public async Task AddTaskillerToPremiumPlan(uint id, string token)
-    {
-        if (token != _authSettings.PremiumToken)
-        {
-            throw new DomainException("Invalid token.");
-        }
-
-        var taskiller = await _context.Taskillers.FirstOrDefaultAsync(t => t.Id == id);
-
-        if (taskiller == null)
-        {
-            throw new DomainException("Taskiller not found.", 404);
-        }
-
-        var claims = await _userManager.GetClaimsAsync(taskiller);
-        if (claims.Any(c => c.Type == PremiumClaim)) return;
-
-        await _userManager.AddClaimAsync(taskiller, new Claim(PremiumClaim, "true"));
-    }
-
     private async Task<string> GenerateJwt(string email)
     {
         var user = await _userManager.FindByNameAsync(email);

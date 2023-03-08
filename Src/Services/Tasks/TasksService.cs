@@ -187,21 +187,6 @@ public class TasksService : ITasksService
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddTaskReminder(uint userId, uint taskId, int? beforeInMinutes)
-    {
-        var taskExists = await _context.Tasks.AnyAsync(t => t.UserId == userId && t.Id == taskId);
-        if (!taskExists)
-        {
-            throw new DomainException("Task not found.", 404);
-        }
-
-        var reminder = new Reminder(taskId, beforeInMinutes);
-
-        await _context.Reminders.AddAsync(reminder);
-
-        await _context.SaveChangesAsync();
-    }
-
     public async Task<Domain.Task> GetTask(uint userId, uint taskId)
     {
         var task = await _context.Tasks.AsNoTracking()

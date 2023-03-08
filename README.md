@@ -25,7 +25,7 @@ Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, co
 ### Funcionalidades
 
 - Usuários:
-  - Criar um novo, fazer login, adicionar usuário ao plano Premium
+  - Criar um novo, fazer login
 - Tasks:
   - Criar uma task
   - Adicionar sub-tasks a uma task
@@ -46,7 +46,6 @@ Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, co
 ### Backlog
 
 - Adicionar eventos / histórico de atividades
-- Relatórios de produtividade (Premium Plan)
 - Usar o Bogus para gerar dados nos testes
 - Testes de mutação
 - Login com OAuth 2.0, OpenID Connect

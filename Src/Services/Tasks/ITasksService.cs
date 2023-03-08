@@ -22,8 +22,6 @@ public interface ITasksService
 
     Task ChangeTaskDueDate(uint userId, uint taskId, DateTime? dueDate);
 
-    Task AddTaskReminder(uint userId, uint taskId, int? beforeInMinutes);
-
     Task<Subtask> CreateSubtask(uint userId, SubtaskIn data);
 
     Task<Domain.Task> GetTask(uint userId, uint taskId);
