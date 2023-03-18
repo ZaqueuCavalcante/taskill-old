@@ -12,11 +12,14 @@ PVector END_CELL = new PVector(ROWS-1, COLUMNS-1);
 // 3 -> End
 // 4 -> Player
 
+int playerRow = 0;
+int playerColumn = 0;
+
 int step = 0;
 int[][] currentMaze = new int[ROWS][COLUMNS];
 int[][] nextMaze = new int[ROWS][COLUMNS];
 
-String[][] paths = new String[3][100];
+ArrayList<String> path = new ArrayList<String>();
 
 void setup()
 {
@@ -25,9 +28,6 @@ void setup()
     setupInitialState();
 
     nextGeneration();
-    
-    paths[0] = new String[] { "R" };
-    paths[1] = new String[] { "D" };
 }
 
 void draw()
@@ -55,6 +55,48 @@ void draw()
         }
     }
 
+    int directionCount = 0;
+    for (String direction : path)
+    {
+        var x = directionCount*CELL_SIZE/2;
+        var y = (ROWS+2)*CELL_SIZE + CELL_SIZE/2;
+        text(direction + " - ", x, y);
+        directionCount ++;
+    }
+
+    fill(255,0,0);
+    circle(playerColumn*CELL_SIZE + CELL_SIZE, playerRow*CELL_SIZE + CELL_SIZE, CELL_SIZE/2);
+
+    if ((playerRow-1) >= 0)
+    {
+        if (nextMaze[playerRow-1][playerColumn] != 1)
+        {
+            circle(playerColumn*CELL_SIZE + CELL_SIZE, playerRow*CELL_SIZE + CELL_SIZE*0.50, CELL_SIZE/4);
+        }
+    }
+    if ((playerColumn+1) < COLUMNS)
+    {
+        if (nextMaze[playerRow][playerColumn+1] != 1)
+        {
+            circle(playerColumn*CELL_SIZE + CELL_SIZE*1.50, playerRow*CELL_SIZE + CELL_SIZE, CELL_SIZE/4);
+        }
+    }
+    if ((playerRow+1) < ROWS)
+    {
+        if (nextMaze[playerRow+1][playerColumn] != 1)
+        {
+            circle(playerColumn*CELL_SIZE + CELL_SIZE, playerRow*CELL_SIZE + CELL_SIZE*1.50, CELL_SIZE/4);
+        }
+    }
+    if ((playerColumn-1) >= 0)
+    {
+        if (nextMaze[playerRow][playerColumn-1] != 1)
+        {
+            circle(playerColumn*CELL_SIZE + CELL_SIZE*0.50, playerRow*CELL_SIZE + CELL_SIZE, CELL_SIZE/4);
+        }
+    }
+
+
     translate((COLUMNS+1)*CELL_SIZE, 0);
     for (int row = 0; row < ROWS; row++)
     {
@@ -71,31 +113,40 @@ void draw()
             text(neighbors, column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE*1.15);
         }
     }
-
-
-    int pathCount = 0;
-    for (String[] path : paths)
-    {
-      int directionCount = 0;
-      for (String direction : path)
-      {
-          var x = directionCount*CELL_SIZE/2;
-          var y = (ROWS+2)*CELL_SIZE + pathCount*CELL_SIZE/2;
-          text(direction + " - ", x, y);
-          directionCount ++;
-      }
-      pathCount ++;
-    }
 }
 
 void keyPressed() {
-    if (keyCode == 37 && step != 0) {
-      step--;
-    }
-    if (keyCode == 39) {
+    if (keyCode == 37 && playerColumn > 0)
+    {
+      playerColumn--;
       step++;
       currentMaze = nextMaze;
       nextGeneration();
+      path.add("L");
+    }
+    if (keyCode == 38 && playerRow > 0)
+    {
+      playerRow--;
+      step++;
+      currentMaze = nextMaze;
+      nextGeneration();
+      path.add("U");
+    }
+    if (keyCode == 39 && playerColumn < COLUMNS-1)
+    {
+      playerColumn++;
+      step++;
+      currentMaze = nextMaze;
+      nextGeneration();
+      path.add("R");
+    }
+    if (keyCode == 40 && playerRow < ROWS-1)
+    {
+      playerRow++;
+      step++;
+      currentMaze = nextMaze;
+      nextGeneration();
+      path.add("D");
     }
 }
 
