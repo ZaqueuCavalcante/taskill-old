@@ -18,6 +18,8 @@ int[][] maze = new int[ROWS][COLUMNS];
 void setup()
 {
     size(800, 900);
+    
+    setupInitialState();
 }
 
 void draw()
@@ -30,20 +32,6 @@ void draw()
     text("STEP: " + step, (COLUMNS+2.50)*CELL_SIZE, CELL_SIZE*0.70);
 
     translate(CELL_SIZE/2, CELL_SIZE/2);
-
-    maze = new int[ROWS][COLUMNS];
-    maze[(int)START_CELL.x][(int)START_CELL.y] = 2;
-    maze[(int)END_CELL.x][(int)END_CELL.y] = 2;
-
-    if (step == 0) { setupStep00(); }
-    if (step == 1) { setupStep01(); }
-    if (step == 2) { setupStep02(); }
-    if (step == 3) { setupStep03(); }
-
-    if (step == 4) { setupStep04(); }
-    if (step == 5) { setupStep05(); }
-    if (step == 6) { setupStep06(); }
-    if (step == 7) { setupStep07(); }
     
     for (int row = 0; row < ROWS; row++)
     {
@@ -54,6 +42,10 @@ void draw()
             if (maze[row][column] == 2) { fill(255,255,0); }
 
             rect(column*CELL_SIZE + CELL_SIZE/2, row*CELL_SIZE + CELL_SIZE/2, CELL_SIZE, CELL_SIZE);
+            
+            int neighbors = getNeighbors(row, column);
+            fill(0);
+            text(neighbors, column*CELL_SIZE + CELL_SIZE, row*CELL_SIZE + CELL_SIZE*1.15);
         }
     }
 }
@@ -64,6 +56,7 @@ void keyPressed() {
     }
     if (keyCode == 39) {
       step++;
+      nextGeneration();
     }
 }
 
@@ -89,8 +82,12 @@ void fillRow(int row, int[] columns)
     }
 }
 
-void setupStep00()
+void setupInitialState()
 {
+    maze = new int[ROWS][COLUMNS];
+    maze[(int)START_CELL.x][(int)START_CELL.y] = 2;
+    maze[(int)END_CELL.x][(int)END_CELL.y] = 2;
+
     fillRow(1, new int[] { 4 });
     fillRow(2, new int[] { 2, 4, 5 });
     fillRow(3, new int[] { 1, 2, 5, 6 });
@@ -98,77 +95,70 @@ void setupStep00()
     fillRow(5, new int[] { 4 });
 }
 
-void setupStep01()
+int getNeighbors(int row, int column)
 {
-    fillRow(1, new int[] { 3, 5 });
-    fillRow(2, new int[] { 1, 5, 6 });
-    fillRow(3, new int[] { 5 });
-    fillRow(4, new int[] { 1, 5, 6 });
-    fillRow(5, new int[] { 3, 5 });
+    int neighbors = 0;
+    
+    if ((row-1) >= 0 && (column-1) >= 0)
+    {
+        if (maze[row-1][column-1] == 1) { neighbors++; }
+    }
+    if ((row-1) >= 0)
+    {
+        if (maze[row-1][column] == 1) { neighbors++; }
+    }
+    if ((row-1) >= 0 && (column+1) < COLUMNS)
+    {
+        if (maze[row-1][column+1] == 1) { neighbors++; }
+    }
+    
+    if ((column-1) >= 0)
+    {
+        if (maze[row][column-1] == 1) { neighbors++; }
+    }
+    if ((column+1) < COLUMNS)
+    {
+        if (maze[row][column+1] == 1) { neighbors++; }
+    }
+    
+    if ((row+1) < ROWS && (column-1) >= 0)
+    {
+        if (maze[row+1][column-1] == 1) { neighbors++; }
+    }
+    if ((row+1) < ROWS)
+    {
+        if (maze[row+1][column] == 1) { neighbors++; }
+    }
+    if ((row+1) < ROWS && (column+1) < COLUMNS)
+    {
+        if (maze[row+1][column+1] == 1) { neighbors++; }
+    }
+    
+    return neighbors;
 }
 
-void setupStep02()
+void nextGeneration()
 {
-    fillRow(0, new int[] { 4 });
-    fillRow(1, new int[] { 2, 4, 6 });
-    fillRow(2, new int[] { 2 });
-    fillRow(3, new int[] { 0, 1, 2, 4, 5, 7 });
-    fillRow(4, new int[] { 2 });
-    fillRow(5, new int[] { 2, 4, 6 });
-    fillRow(6, new int[] { 4 });
-}
-
-void setupStep03()
-{
-    fillRow(0, new int[] { 3, 5 });
-    fillRow(1, new int[] { 1, 5 });
-    fillRow(2, new int[] { 0, 4, 6, 7 });
-    fillRow(3, new int[] { 1, 6 });
-    fillRow(4, new int[] { 0, 4, 6, 7 });
-    fillRow(5, new int[] { 1, 5 });
-    fillRow(6, new int[] { 3, 5 });
-}
-
-void setupStep04()
-{
-    fillRow(0, new int[] { 2, 4, 6 });
-    fillRow(1, new int[] { 0, 2, 3, 7 });
-    fillRow(2, new int[] { 1, 2 });
-    fillRow(3, new int[] { 0, 3, 4, 6 });
-    fillRow(4, new int[] { 1, 2 });
-    fillRow(5, new int[] { 0, 2, 3, 7 });
-    fillRow(6, new int[] { 2, 4, 6 });
-}
-
-void setupStep05()
-{
-    fillRow(0, new int[] { 1, 5, 7 });
-    fillRow(1, new int[] { 2, 3, 4, 5, 6 });
-    fillRow(2, new int[] { 0, 1, 2, 4, 5, 6, 7 });
-    fillRow(3, new int[] { 5 });
-    fillRow(4, new int[] { 0, 1, 2, 4, 5, 6, 7 });
-    fillRow(5, new int[] { 2, 3, 4, 5, 6 });
-    fillRow(6, new int[] { 1, 5 });  // Simetric loose
-}
-
-void setupStep06()
-{
-    fillRow(0, new int[] { 2, 3 });
-    fillRow(1, new int[] { 0, 2, 3, 4, 5, 6 });
-    fillRow(2, new int[] { 4, 5, 6 });
-    fillRow(3, new int[] { 5 });
-    fillRow(4, new int[] { 4, 5, 6 });
-    fillRow(5, new int[] { 0, 2, 3, 4, 5, 6, 7 });
-    fillRow(6, new int[] { 2, 3, 6 });
-}
-
-void setupStep07()
-{
-    fillRow(0, new int[] { 1, 3, 5, 6 });
-    fillRow(1, new int[] { 1, 3, 4, 5, 7 });
-    fillRow(2, new int[] { 1, 2, 4, 5, 6, 7 });
-    fillRow(3, new int[] { 3, 5, 7 });
-    fillRow(4, new int[] { 1, 2, 4, 5, 6, 7 });
-    fillRow(5, new int[] { 1, 3, 4, 5, 6 });
-    fillRow(6, new int[] { 1, 3 });
+    int[][] nextMaze = new int[ROWS][COLUMNS];
+    nextMaze[(int)START_CELL.x][(int)START_CELL.y] = 2;
+    nextMaze[(int)END_CELL.x][(int)END_CELL.y] = 2;
+  
+    for (int row = 0; row < ROWS; row++)
+    {
+        for (int column = 0; column < COLUMNS; column++)
+        {
+            int neighbors = getNeighbors(row, column);
+            
+            if (maze[row][column] == 0)
+            {
+                if (neighbors == 2 || neighbors == 3) { nextMaze[row][column] = 1; }
+            }
+            else if (maze[row][column] == 1)
+            {
+                if (neighbors == 4 || neighbors == 5 || neighbors == 6) { nextMaze[row][column] = 1; }
+            }
+        }
+    }
+    
+    maze = nextMaze;
 }
