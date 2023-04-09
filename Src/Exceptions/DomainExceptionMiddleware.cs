@@ -13,19 +13,19 @@ public class DomainExceptionMiddleware
         {
             await next(context);
         }
-        catch (DomainException ex)
+        catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(HttpContext context, DomainException ex)
+    private static Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
         var result = JsonSerializer.Serialize(new { error = ex.Message });
 
         context.Response.ContentType = "application/json";
 
-        context.Response.StatusCode = ex.StatusCode;
+        // context.Response.StatusCode = ex.StatusCode;
 
         return context.Response.WriteAsync(result);
     }
