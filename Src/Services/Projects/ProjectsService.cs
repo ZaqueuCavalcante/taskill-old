@@ -20,9 +20,7 @@ public class ProjectsService : IProjectsService
     {
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.UserId == userId && p.Name == name);
         if (project != null)
-        {
             throw new DomainException("Project already exists.");
-        }
 
         project = new Project(userId, name);
 
@@ -37,9 +35,7 @@ public class ProjectsService : IProjectsService
     {
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         var projectWithThisName = await _context.Projects.FirstOrDefaultAsync(p => p.UserId == userId && p.Name == name);
         if (projectWithThisName != null)
@@ -56,9 +52,7 @@ public class ProjectsService : IProjectsService
     {
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         var section = new Section(id, name);
 
@@ -73,9 +67,7 @@ public class ProjectsService : IProjectsService
     {
         var project = await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         var tasks = await _context.Tasks
             .Where(t => t.UserId == userId && t.ProjectId == id)
@@ -91,15 +83,11 @@ public class ProjectsService : IProjectsService
     {
         var project = await _context.Projects.AsNoTracking().FirstOrDefaultAsync(p => p.UserId == userId && p.Id == projectId);
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         var section = await _context.Sections.AsNoTracking().FirstOrDefaultAsync(s => s.ProjectId == projectId && s.Id == sectionId);
         if (section == null)
-        {
             throw new DomainException("Section not found.", 404);
-        }
 
         var tasks = await _context.Tasks
             .Where(t => t.UserId == userId && t.SectionId == sectionId)
@@ -118,9 +106,7 @@ public class ProjectsService : IProjectsService
             .FirstOrDefaultAsync(p => p.UserId == userId && p.Id == id);
 
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         project.Tasks = await _context.Tasks
             .AsNoTracking()

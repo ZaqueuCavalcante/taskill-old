@@ -36,9 +36,7 @@ public class LabelsService : ILabelsService
     {
         var label = await _context.Labels.FirstOrDefaultAsync(l => l.UserId == userId && l.Id == id);
         if (label == null)
-        {
             throw new DomainException("Label not found.", 404);
-        }
 
         var projectWithThisName = await _context.Labels.FirstOrDefaultAsync(l => l.UserId == userId && l.Name == name);
         if (projectWithThisName != null)
@@ -56,9 +54,7 @@ public class LabelsService : ILabelsService
         var label = await _context.Labels.FirstOrDefaultAsync(l => l.UserId == userId && l.Id == id);
 
         if (label == null)
-        {
             throw new DomainException("Label not found.", 404);
-        }
 
         return label;
     }

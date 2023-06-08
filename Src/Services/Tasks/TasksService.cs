@@ -51,9 +51,7 @@ public class TasksService : ITasksService
         var task = await _context.Tasks.AsNoTracking()
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == data.taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         var subtaskIndex = await _context.Subtasks.CountAsync(s => s.TaskId == data.taskId);
 
@@ -71,9 +69,7 @@ public class TasksService : ITasksService
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.Complete();
 
@@ -86,9 +82,7 @@ public class TasksService : ITasksService
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.Uncomplete();
 
@@ -99,9 +93,7 @@ public class TasksService : ITasksService
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.SetPriority(priority);
 
@@ -112,9 +104,7 @@ public class TasksService : ITasksService
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.SetTitle(title);
 
@@ -125,9 +115,7 @@ public class TasksService : ITasksService
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.SetDescription(description);
 
@@ -138,16 +126,12 @@ public class TasksService : ITasksService
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         var project = await _context.Projects.AsNoTracking()
             .FirstOrDefaultAsync(p => p.UserId == userId && p.Id == projectId);
         if (project == null)
-        {
             throw new DomainException("Project not found.", 404);
-        }
 
         task.SetProject(projectId);
 
@@ -160,9 +144,7 @@ public class TasksService : ITasksService
             .Include(t => t.Labels)
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         var userLabels = await _context.Labels.AsNoTracking()
             .Where(l => l.UserId == userId && labels.Contains(l.Id)).ToListAsync();
@@ -176,9 +158,7 @@ public class TasksService : ITasksService
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.SetDueDate(dueDate);
 
@@ -192,9 +172,7 @@ public class TasksService : ITasksService
             .FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
 
         if (task == null)
-        {
             throw new DomainException("Task not found.", 404);
-        }
 
         task.Subtasks = await _context.Subtasks.AsNoTracking()
             .Where(s => s.TaskId == taskId)

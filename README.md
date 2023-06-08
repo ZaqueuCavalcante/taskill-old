@@ -33,4 +33,3 @@ Fiz esse projeto para ajudar quem tá começando na área de desenvolvimento, co
   - Mover uma task de uma seção para outra
 - Labels:
   - Criar uma label, alterar seu nome, visualizar uma ou várias
-
