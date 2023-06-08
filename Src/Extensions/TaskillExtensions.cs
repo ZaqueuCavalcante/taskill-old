@@ -8,7 +8,7 @@ public static class TaskillExtensions
 {
     public static uint Id(this ClaimsPrincipal user)
     {
-        return uint.Parse(user.FindFirstValue("sub"));
+        return uint.Parse(user.FindFirstValue("sub")!);
     }
 
     public static string ToSnakeCase(this string input)
