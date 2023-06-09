@@ -1,5 +1,4 @@
 using Taskill.Configs;
-using System.Text.Json.Serialization;
 
 namespace Taskill;
 
@@ -11,9 +10,7 @@ public class Startup
         services.AddServicesConfigs();
 
         services.AddRoutingConfigs();
-        services.AddControllers().AddJsonOptions(options =>
-            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter())
-        );
+        services.AddControllersConfigs();
 
         services.AddEfCoreConfigs();
         services.AddIdentityConfigs();
