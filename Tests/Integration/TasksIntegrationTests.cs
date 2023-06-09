@@ -1,6 +1,7 @@
 using System.Net;
 using FluentAssertions;
 using NUnit.Framework;
+using Taskill.Domain;
 using Taskill.Controllers;
 using Task = System.Threading.Tasks.Task;
 
@@ -57,7 +58,7 @@ public class TasksIntegrationTests : ApiTestBase
         var task = await response.DeserializeTo<TaskOut>();
 
         // Assert
-        task.priority.Should().Be(0);
+        task.priority.Should().Be(nameof(Priority.High));
     }
 
     [Test]
@@ -108,29 +109,7 @@ public class TasksIntegrationTests : ApiTestBase
         var task = await response.DeserializeTo<TaskOut>();
 
         // Assert
-        task.priority.Should().Be(0);
-    }
-
-    [Test]
-    public async Task On_task_creation__when_the_priority_is_invalid__should_throw_error()
-    {
-        // Arrange
-        await CreateTaskiller();
-        await Login();
-
-        var taskIn = new TaskIn
-        {
-            title = "Finish this project",
-            priority = 5,
-        };
-
-        // Act
-        var response = await _client.PostAsync("/tasks", taskIn.ToStringContent());
-        var error = await response.DeserializeTo<ErrorDto>();
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        error.error.Should().Be("The task priority should be 0, 1, 2 or 3.");
+        task.priority.Should().Be(nameof(Priority.High));
     }
 
     [Test]
@@ -179,7 +158,7 @@ public class TasksIntegrationTests : ApiTestBase
         await CreateTaskiller();
         await Login();
         var taskId = await CreateTask();
-        const byte newPriority = 3;
+        const Priority newPriority = Priority.High;
 
         // Act
         var response = await _client.PutAsync($"/tasks/{taskId}/priority/{newPriority}", null);
@@ -189,7 +168,7 @@ public class TasksIntegrationTests : ApiTestBase
 
         var task = await GetTask(taskId);
 
-        task.priority.Should().Be(newPriority);
+        task.priority.Should().Be(nameof(Priority.High));
     }
 
     [Test]

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Taskill.Extensions;
+using Taskill.Domain;
 using Taskill.Services;
-using static Taskill.Configs.AuthorizationConfigs;
 
 namespace Taskill.Controllers;
 
@@ -68,7 +68,7 @@ public class TasksController : ControllerBase
     /// </summary>
     [HttpPut("{id}/priority/{newPriority}")]
     [ProducesResponseType(204)]
-    public async Task<IActionResult> ChangeTaskPriority([FromRoute] uint id, [FromRoute] byte newPriority)
+    public async Task<IActionResult> ChangeTaskPriority([FromRoute] uint id, [FromRoute] Priority newPriority)
     {
         await _tasksService.ChangeTaskPriority(User.Id(), id, newPriority);
 

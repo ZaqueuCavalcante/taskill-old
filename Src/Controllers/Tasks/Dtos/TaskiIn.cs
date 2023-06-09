@@ -1,3 +1,5 @@
+using Taskill.Domain;
+
 namespace Taskill.Controllers;
 
 public class TaskIn
@@ -14,6 +16,9 @@ public class TaskIn
     /// <example>Look for all controllers and endpoints to make the features docs lalala.</example>
     public string? description { get; set; }
 
-    /// <example>3</example>
-    public byte priority { get; set; }
+    /// <example>Todo | Doing | Done</example>
+    public Status status { get; set; }
+
+    /// <example>High | Medium | Low</example>
+    public Priority priority { get; set; }
 }

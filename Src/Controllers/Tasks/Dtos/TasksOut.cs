@@ -10,7 +10,9 @@ public class TasksOut
 
     public string? description { get; set; }
 
-    public byte priority { get; set; }
+    public string status { get; set; }
+
+    public string priority { get; set; }
 
     public DateTime creationDate { get; set; }
 
@@ -24,7 +26,8 @@ public class TasksOut
         projectId = task.ProjectId;
         title = task.Title;
         description = task.Description;
-        priority = task.Priority;
+        status = task.Status.ToString();
+        priority = task.Priority.ToString();
         creationDate = task.CreationDate;
         dueDate = task.DueDate;
     }

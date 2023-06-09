@@ -11,7 +11,7 @@ public interface ITasksService
     Task CompleteTask(uint userId, uint taskId);
     Task UncompleteTask(uint userId, uint taskId);
 
-    Task ChangeTaskPriority(uint userId, uint taskId, byte priority);
+    Task ChangeTaskPriority(uint userId, uint taskId, Priority priority);
 
     Task ChangeTaskTitle(uint userId, uint taskId, string title);
     Task ChangeTaskDescription(uint userId, uint taskId, string description);

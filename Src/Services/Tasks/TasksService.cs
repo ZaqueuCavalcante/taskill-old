@@ -38,7 +38,10 @@ public class TasksService : ITasksService
         var taskIndex = sectionExists ?
             await _context.Sections.CountAsync(s => s.Id == sectionId) : await _context.Tasks.CountAsync(t => t.ProjectId == projectId);
 
-        var task = new Domain.Task(userId, projectId, sectionId, data.title, data.description, data.priority, taskIndex);
+        var task = new Domain.Task(userId, projectId, sectionId, data.title, data.description, data.priority, taskIndex)
+        {
+            Status = data.status,
+        };
 
         _context.Add(task);
         await _context.SaveChangesAsync();
@@ -89,13 +92,13 @@ public class TasksService : ITasksService
         await _context.SaveChangesAsync();
     }
 
-    public async Task ChangeTaskPriority(uint userId, uint taskId, byte priority)
+    public async Task ChangeTaskPriority(uint userId, uint taskId, Priority priority)
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(t => t.UserId == userId && t.Id == taskId);
         if (task == null)
             throw new DomainException("Task not found.", 404);
 
-        task.SetPriority(priority);
+        task.Priority = priority;
 
         await _context.SaveChangesAsync();
     }

@@ -17,7 +17,9 @@ public class Task
 
     public string? Description { get; set; }
 
-    public byte Priority { get; set; }
+    public Status Status { get; set; }
+
+    public Priority Priority { get; set; }
 
     public DateTime CreationDate { get; set; }
 
@@ -39,7 +41,7 @@ public class Task
         uint? sectionId,
         string title,
         string? description,
-        byte priority,
+        Priority priority,
         int index = 0
     ) {
         UserId = userId;
@@ -47,7 +49,7 @@ public class Task
         SectionId = sectionId;
         SetTitle(title);
         SetDescription(description);
-        SetPriority(priority);
+        Priority = priority;
         SetIndex(index);
         CreationDate = DateTime.UtcNow;
     }
@@ -60,16 +62,6 @@ public class Task
         }
 
         Title = title;
-    }
-
-    public void SetPriority(byte priority)
-    {
-        if (priority > 3)
-        {
-            throw new DomainException("The task priority should be 0, 1, 2 or 3.");
-        }
-
-        Priority = priority;
     }
 
     public void SetDescription(string? description)

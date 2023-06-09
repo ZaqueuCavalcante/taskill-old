@@ -2,22 +2,6 @@ namespace Taskill.Tests;
 
 public static class Streams
 {
-    public static IEnumerable<object[]> InvalidPrioritiesStream()
-    {
-        foreach (var priority in new List<byte>() { 4, 5, 6, 7, })
-        {
-            yield return new object[] { priority };
-        }
-    }
-
-    public static IEnumerable<object[]> ValidPrioritiesStream()
-    {
-        foreach (var priority in new List<byte>() { 0, 1, 2, 3, })
-        {
-            yield return new object[] { priority };
-        }
-    }
-
     public static IEnumerable<object[]> InvalidTitlesStream()
     {
         foreach (var title in new List<string>() { null, "", "a", "", " ", "  ", "     ", "La", })
